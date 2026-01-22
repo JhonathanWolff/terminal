@@ -82,21 +82,17 @@ function dcc {
 function UploadShellConfig {
 
   current_dir=$(pwd)
-  sudo cp ~/.zshrc ~/wsl_config/.zshrc
-  sudo cp ~/.bashrc ~/wsl_config/.bashrc
-  sudo cp ~/.tmux.conf ~/wsl_config/.tmux.conf
-  sudo cp -r ~/.terminal_conf ~/wsl_config/
-  sudo cp -r ~/.config/nvim ~/wsl_config/
-  sudo  rm ~/wsl_config/.terminal_conf/.env
-  sudo  touch ~/wsl_config/.terminal_conf/.env
-  sudo cp $STARSHIP_CONFIG ~/wsl_config/starship.toml
-  sudo cp $HOME/work/work_envs/requirements.txt ~/wsl_config/requirements.txt
+  sudo cp ~/.zshrc $HOME/terminal/.zshrc
+  sudo cp ~/.bashrc $HOME/terminal/.bashrc
+  sudo cp ~/.tmux.conf $HOME/terminal/.tmux.conf
+  sudo cp -r ~/.config/nvim $HOME/terminal/
+  sudo cp $STARSHIP_CONFIG $HOME/terminal/starship/starship.toml
+  sudo cp $HOME/work/work_envs/requirements.txt $HOME/terminal/terminal_python/requirements.txt
 
-  cd ~/wsl_config
-  find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
-  git add --all
-  git commit -m "Updated Shell config" --quiet
-  git push --quiet
+  # find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
+  # git add --all
+  # git commit -m "Updated Shell config" --quiet
+  # git push --quiet
 
   cd $current_dir
 

@@ -152,24 +152,24 @@ function iam_add {
     if [ "${UPDATE_CACHE}" = "-u" ];
     then
       echo "Clearing Roles Cache..."
-      rm "${HOME}/.terminal_conf/gcp_roles.json"
+      rm "${HOME}/terminal/terminal_functions/gcp_roles.json"
     fi
     
-   if [ ! -e "${HOME}/.terminal_conf/gcp_roles.json" ];
+   if [ ! -e "${HOME}/terminal/terminal_functions/gcp_roles.json" ];
    then
      echo "Populating GCP Roles...."
-     gcloud iam roles list --format=json | jq -c '.[]'  >> "${HOME}/.terminal_conf/gcp_roles.json"
+     gcloud iam roles list --format=json | jq -c '.[]'  >> "${HOME}/terminal/terminal_functions/gcp_roles.json"
      echo "Populating GCP Organization Roles...."
-     gcloud iam roles list --organization 239620507249 --format=json | jq -c '.[]'  >> "${HOME}/.terminal_conf/gcp_roles.json"
+     gcloud iam roles list --organization 239620507249 --format=json | jq -c '.[]'  >> "${HOME}/terminal/terminal_functions/gcp_roles.json"
    fi
 
     PROJECTS=$(gcloud projects list --format="value(PROJECT_ID)" | fzf --tmux 90% -m --prompt="Projetos> ")
     ROLES=$(
-    jq -r '. | .title +" >" + .name ' "${HOME}/.terminal_conf/gcp_roles.json" | \
+    jq -r '. | .title +" >" + .name ' "${HOME}/terminal/terminal_functions/gcp_roles.json" | \
     fzf -m --tmux 90% --prompt='Roles> ' \
     --preview-window=bottom:15% \
       --preview "selected_name=\$(echo {} | cut -d '>' -f 2); \
-                jq -r --arg name \"\$selected_name\" 'select(.name == \$name) | .description' ${HOME}/.terminal_conf/gcp_roles.json"
+                jq -r --arg name \"\$selected_name\" 'select(.name == \$name) | .description' ${HOME}/terminal/terminal_functions/gcp_roles.json"
               )
     PROJECTS=($(echo $PROJECTS))
     ROLES=$( echo $ROLES | cut -d '>' -f 2)
@@ -232,7 +232,7 @@ function appsflyer_url {
 
 
   current_dir=$(pwd)
-  cd ~/wsl_config/appsflyer
+  cd $HOME/terminal/terminal_python/appsflyer
 
   result=$(python parse_report.py $@)
 
@@ -258,7 +258,7 @@ function cloudfunction_collectionids {
 
 
   current_dir=$(pwd)
-  cd ~/wsl_config/cloudfunction
+  cd $HOME/terminal/terminal_python/cloudfunction
 
   project=$(gcloud projects list --format="value(projectId)" --filter="NOT projectId ~ datarepository" | fzf --tmux 90% )
 
@@ -307,7 +307,7 @@ function gcp_change_project {
 function kms_decrypt {
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config/kms_script
+  cd $HOME/terminal/terminal_python/kms_script
 
   for i in "$@" ; do
     if [[ $i == "-h" ]] ; then
@@ -325,7 +325,7 @@ function kms_decrypt {
 function kms_encrypt {
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config/kms_script
+  cd $HOME/terminal/terminal_python/kms_script
 
   for i in "$@" ; do
     if [[ $i == "-h" ]] ; then
@@ -342,7 +342,7 @@ function kms_encrypt {
 function firestore_get_document {
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config/firestore_script
+  cd $HOME/terminal/terminal_python/firestore_script
   result=$(python3 getDocument.py $@)
 
   last_execution=$?
@@ -364,7 +364,7 @@ function firestore_get_document {
 function run_report_v2 {
 
   current_dir=$(pwd)
-  cd ~/wsl_config
+  cd $HOME/terminal/terminal_python
 
   if [[ "$#" != "0" ]]; then
 
@@ -376,15 +376,15 @@ function run_report_v2 {
 
   for PROJECT_ID in "${PROJECTS[@]}";
   do
-    for API in $(python $HOME/wsl_config/firestore_script/search_apis.py "${PROJECT_ID}" | fzf --tmux -m --prompt="APIs for project [${PROJECT_ID}]> ");
+    for API in $(python $HOME/terminal/terminal_python/firestore_script/search_apis.py "${PROJECT_ID}" | fzf --tmux -m --prompt="APIs for project [${PROJECT_ID}]> ");
     do
 
-      for CLIENT in $(python "${HOME}/wsl_config/firestore_script/search_clients.py" "${PROJECT_ID}" | fzf --tmux -m --prompt="Clients for project [${PROJECT_ID}]> ");
+      for CLIENT in $(python "${HOME}/terminal/terminal_python/firestore_script/search_clients.py" "${PROJECT_ID}" | fzf --tmux -m --prompt="Clients for project [${PROJECT_ID}]> ");
       do
 
-        REPORTS=($(python "${HOME}/wsl_config/firestore_script/search_report.py" "${PROJECT_ID}" "${CLIENT}" "${API}" | fzf --tmux -m --prompt="[${PROJECT_ID}] Reports for [${CLIENT} - ${API}]> "))
+        REPORTS=($(python "${HOME}/terminal/terminal_python/firestore_script/search_report.py" "${PROJECT_ID}" "${CLIENT}" "${API}" | fzf --tmux -m --prompt="[${PROJECT_ID}] Reports for [${CLIENT} - ${API}]> "))
         REPORTS=$(IFS=, ; echo "${REPORTS[*]}")
-        python $HOME/wsl_config/run_report_v2.py "${PROJECT_ID}" "${CLIENT}" "${API}" "${REPORTS}"
+        python $HOME/terminal/terminal_python/run_report_v2.py "${PROJECT_ID}" "${CLIENT}" "${API}" "${REPORTS}"
       done
       
 
@@ -409,7 +409,7 @@ function run_report_v2 {
 function run_report {
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config
+  cd $HOME/terminal/terminal_python
 
 
   if [[ "$#" != "0" ]]; then
@@ -446,7 +446,7 @@ function datasink_transfers {
   figlet datasink -f slant
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config/bq
+  cd $HOME/terminal/terminal_python/bq
 
   if [[ $# -eq 0 ]]; then
       cd querys
@@ -489,10 +489,10 @@ function datasink_contains {
   figlet datasink -f slant
   work_time
   current_dir=$(pwd)
-  cd ~/wsl_config/bq
+  cd $HOME/terminal/terminal_python/bq
   echo "Searching Argument : $1"
 
-  if [[ -d ~/wsl_config/bq/querys && -n "$(ls -A ~/wsl_config/bq/querys)" && "$*" != *"-u"* ]]; then
+  if [[ -d $HOME/terminal/terminal_python/bq/querys && -n "$(ls -A $HOME/terminal/terminal_python/bq/querys)" && "$*" != *"-u"* ]]; then
     echo "==========================="
   else
       echo "Populating with new Information..."
@@ -522,7 +522,7 @@ function datasink_contains {
       echo "==========================="
   fi
 
-  cd ~/wsl_config/bq/querys
+  cd $HOME/terminal/terminal_python/bq/querys
   rg . --no-ignore-vcs | grep "$1" | sed  -r 's/([0-9A-z\-_\.]+):.*/\1/g' | sed -r 's/^([0-9A-z_\-]+\.)([0-9A-z\-_]+).sql/\2/g' | xargs -n1 | sort -u
   echo "==========================="
   cd $current_dir

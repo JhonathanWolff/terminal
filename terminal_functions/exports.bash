@@ -10,7 +10,7 @@ export BASH="$HOME/.bashrc"
 export TRASH="$HOME/.local/share/Trash/files"
 
 export NVIM_SWAP="$HOME/.local/state/nvim/swap"
-export TERM_CONFIG="$HOME/.terminal_conf"
+export TERM_CONFIG="$HOME/terminal"
 
 export SUDO_EDITOR=nvim
 export EDITOR=nvim
