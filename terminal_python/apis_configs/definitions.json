@@ -1,0 +1,258 @@
+{
+    "adobeanalytics": {
+        "resource": "orchestration",
+        "collection_id": "reportsuites"
+    },
+    "globoads": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "amazonads": {
+        "resource": "create_report",
+        "collection_id": "sponsored"
+    },
+    "amazonadsdsp": {
+        "resource": "create_report",
+        "collection_id": "accounts"
+    },
+    "amazonadssponsored": {
+        "resource": "create_report",
+        "collection_id": "accounts"
+    },
+    "amazonmc": {
+        "resource": "execute_ad_hoc",
+        "collection_id": "accounts"
+    },
+    "amazonsellingpartner": {
+        "resource": "create_report",
+        "collection_id": "accounts"
+    },
+    "americanasads": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "apple_appstore": {
+        "resource": "insights",
+        "collection_id": "apps"
+    },
+    "appsflyer": {
+        "resource": "get_report",
+        "collection_id": "accounts"
+    },
+    "appsflyermasterapi": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "appsflyerpullapi": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "awin": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "azure_container": {
+        "resource": "list_blobs",
+        "collection_id": "containers"
+    },
+    "bingads": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "blue": {
+        "resource": "get_report",
+        "collection_id": "accounts"
+    },
+    "cm360": {
+        "resource": "run_report_history",
+        "collection_id": "profiles"
+    },
+    "criteo": {
+        "resource": "insights",
+        "collection_id": "accounts"
+    },
+    "criteomarketing": {
+        "resource": "insights",
+        "collection_id": "accounts"
+    },
+    "criteoretailer": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "dataai": {
+        "resource": "get_data",
+        "collection_id": "unifiedapps"
+    },
+    "dv360": {
+        "resource": "run_report_history",
+        "collection_id": "advertisers"
+    },
+    "emplifi": {
+        "resource": "get_data",
+        "collection_id": ["facebook_profiles","profiles_instagram","profiles_youtube"]
+    },
+    "facilitacrm": {
+        "resource": "general",
+        "collection_id": "accounts"
+    },
+    "fbadstudies": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "fbmarketing": {
+        "resource": "insights",
+        "collection_id": "accounts"
+    },
+    "fileparser": {
+        "resource": null,
+        "collection_id": null
+    },
+    "google_ads": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "googleanalytics4": {
+        "resource": "get_data",
+        "collection_id": "properties"
+    },
+    "googletrends": {
+        "resource": "run_process",
+        "collection_id": "config"
+    },
+    "googlekeywordplanner": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "hiplatform": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "hubspot": {
+        "resource": "get_all_contacts",
+        "collection_id": "accounts"
+    },
+    "hypnobox": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "hive": {
+        "resource": null,
+        "collection_id": null
+    },
+    "linkedinads": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "linx": {
+        "resource": "start_orchestration",
+        "collection_id": "advertisers"
+    },
+    "mailchimp": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "mediamath": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "mercadolivreads": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "match": {
+        "resource": null,
+        "collection_id": null
+    },
+    "mobi": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "nosql_database": {
+        "resource": "get_data",
+        "collection_id": "databases"
+    },
+    "pinterestads": {
+        "resource": "get_report",
+        "collection_id": "accounts"
+    },
+    "pagespeedinsights": {
+        "resource": "run_insights",
+        "collection_id": "pages"
+    },
+    "rtbhouse": {
+        "resource": "get_report",
+        "collection_id": "accounts"
+    },
+    "searchconsole": {
+        "resource": "query",
+        "collection_id": "sites"
+    },
+    "similarweb": {
+        "resource": "orchestration",
+        "collection_id": "domains"
+    },
+    "sqldatabase": {
+        "resource": "select",
+        "collection_id": "databases"
+    },
+    "stilingue": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "taggermedia": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "teads": {
+        "resource": "create_report",
+        "collection_id": "accounts"
+    },
+    "tiktokads": {
+        "resource": "get_report",
+        "collection_id": "accounts"
+    },
+    "twitterads": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "verizon": {
+        "resource": "create_report",
+        "collection_id": "dsp_ids"
+    },
+    "vtex": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
+    "vtexmasterdata": {
+        "resource": null,
+        "collection_id": null
+    },
+    "youtubeanalytics": {
+        "resource": "run_report_schedule",
+        "collection_id": "accounts"
+    },
+    "salesforce": {
+        "resource": "retrieve",
+        "collection_id": "accounts"
+    },
+    "amazonadsstores": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
+    "ftp": {
+        "resource": "list_files",
+        "collection_id": "servers"
+    },
+    "google_my_business": {
+        "resource": "accounts",
+        "collection_id": "accounts"
+    },
+    "awss3": {
+        "resource": "list_blobs",
+        "collection_id": "buckets"
+    },
+    "appleads": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    }
+}
