@@ -114,9 +114,9 @@ cd $HOME
 sudo mkdir -p $HOME/.config/zsh/plugins
 sudo cp -r $TERMINAL/nvim $HOME/.config/
 sudo cp $TERMINAL/tmux/.tmux.conf $HOME/.tmux.conf
-sudo cp $TERMINAL/.bashrc $HOME/.bashrc
+sudo cp $TERMINAL/terminal/.bashrc $HOME/.bashrc
 # sudo cp -r $TERMINAL/terminal_functions $HOME
-sudo cp $TERMINAL/.zshrc $HOME/.zshrc
+sudo cp $TERMINAL/terminal/.zshrc $HOME/.zshrc
 sudo cp $TERMINAL/starship/starship.toml $HOME/.config/starship.toml
 
 

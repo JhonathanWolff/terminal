@@ -6,7 +6,7 @@
 # source ~/.terminal_conf/gcp_functions.bash
 # source ~/.terminal_conf/gcp_checks.bash
 
-for file in $HOME/terminal_functions/*;
+for file in $HOME/terminal/terminal_functions/*;
 do
     if echo "${file}" | grep -Eq "\.(bash|env)$";
     then
