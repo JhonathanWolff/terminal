@@ -24,10 +24,10 @@ alias cat="batcat -p"
 
 alias lgb="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
 
-alias bash_config='vim ~/.bashrc && source ~/.bashrc && tmux source ~/.tmux.conf && UploadShellConfig'
-alias zsh_config='vim ~/.zshrc && source ~/.zshrc && tmux source ~/.tmux.conf && UploadShellConfig'
-alias source_bash='source ~/.bashrc && echo "bash sourced" && UploadShellConfig'
-alias source_zsh='source ~/.zshrc && echo "zsh sourced" && UploadShellConfig'
+alias bash_config='vim ~/.bashrc && source ~/.bashrc && tmux source ~/.tmux.conf && update_terminal'
+alias zsh_config='vim ~/.zshrc && source ~/.zshrc && tmux source ~/.tmux.conf && update_terminal'
+alias source_bash='source ~/.bashrc && echo "bash sourced" && update_terminal'
+alias source_zsh='source ~/.zshrc && echo "zsh sourced" && update_terminal'
 
 #alias rm='echo utilize o comando trash ao invez de rm... && rm'
 

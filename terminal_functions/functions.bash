@@ -79,7 +79,7 @@ function dcc {
 }
 
 
-function UploadShellConfig {
+function update_terminal {
 
   current_dir=$(pwd)
   sudo cp ~/.zshrc $HOME/terminal/terminal/.zshrc
