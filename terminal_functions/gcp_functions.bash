@@ -622,6 +622,40 @@ function magrathea_start {
 
 }
 
+function find_googleapis {
+    CURRENT_DIR=$(pwd)
+    DISCOVERY_URL="https://discovery.googleapis.com/discovery/v1/apis"
+    SCOPE_PATH="/tmp/scopes"
+    mkdir -p "${SCOPE_PATH}"
+    for line in $(curl -s "$DISCOVERY_URL" | jq -c '.items[] | select(.preferred) | {name: .name , description: .description, doc : .documentationLink, title: .title} |@base64');
+    do
+        row=$(echo "$line" | base64 -di)
+        
+
+        name=$(echo "${row}" | jq  -r ".name")
+        title=$(echo "${row}" | jq  -r ".title")
+        description=$(echo "${row}" | jq -r ".description")
+        doc=$(echo "${row}" | jq -r ".doc")
+        echo """
+# ${title}
+
+    * resource : ${name}
+
+## Description
+
+${description}
+
+scope url : ${doc}
+
+        """ > "${SCOPE_PATH}/${name}.md" 
+    done
+    cd "${SCOPE_PATH}"
+    nvim 
+    cd "${CURRENT_DIR}"
+
+
+}
+
 function gcp_function_copy_envs {
 
   project_id=$(gcloud projects list --format="value(projectId)" | fzf --tmux );
