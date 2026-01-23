@@ -1,4 +1,5 @@
 
+This is a personal repository with dot files for enviroment config only
 
 # Install Full Terminal
 
@@ -11,3 +12,8 @@ curl -sL https://raw.githubusercontent.com/JhonathanWolff/terminal/refs/heads/ma
 ```bash
 curl -sL https://raw.githubusercontent.com/JhonathanWolff/terminal/refs/heads/main/install_nvim.bash | bash
 ```
+
+# Links
+
+* [Terminal Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip)
+
