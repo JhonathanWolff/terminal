@@ -3,4 +3,5 @@ __pycache__/*
 *.sql
 querys.json
 *.pyc
+./terminal_functions/gcp_roles.json
 
