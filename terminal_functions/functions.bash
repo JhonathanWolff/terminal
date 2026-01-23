@@ -82,12 +82,15 @@ function dcc {
 function UploadShellConfig {
 
   current_dir=$(pwd)
-  sudo cp ~/.zshrc $HOME/terminal/.zshrc
-  sudo cp ~/.bashrc $HOME/terminal/.bashrc
-  sudo cp ~/.tmux.conf $HOME/terminal/.tmux.conf
+  sudo cp ~/.zshrc $HOME/terminal/terminal/.zshrc
+  sudo cp ~/.bashrc $HOME/terminal/terminal/.bashrc
+  sudo cp ~/.tmux.conf $HOME/terminal/tmux/.tmux.conf
   sudo cp -r ~/.config/nvim $HOME/terminal/
   sudo cp $STARSHIP_CONFIG $HOME/terminal/starship/starship.toml
   sudo cp $HOME/work/work_envs/requirements.txt $HOME/terminal/terminal_python/requirements.txt
+  
+  cd $TERMINAL
+  lazygit
 
   # find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
   # git add --all

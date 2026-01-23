@@ -19,13 +19,10 @@ alias gb="git branch | fzf | xargs git checkout"
 alias cowtip="fortune | cowsay"
 # alias cd="z"
 
-alias jenkins="echo $J_CONFIG | clip.exe"
 alias bat="batcat -p"
 alias cat="batcat -p"
 
 alias lgb="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
-
-
 
 alias bash_config='vim ~/.bashrc && source ~/.bashrc && tmux source ~/.tmux.conf && UploadShellConfig'
 alias zsh_config='vim ~/.zshrc && source ~/.zshrc && tmux source ~/.tmux.conf && UploadShellConfig'

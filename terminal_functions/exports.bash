@@ -6,6 +6,7 @@ export DOCUMENTS="/mnt/c/Users/${WINDOWS_USER}/Documents"
 export DOWNLOADS="/mnt/c/Users/${WINDOWS_USER}/Downloads"
 export ZSH="$HOME/.zshrc"
 export BASH="$HOME/.bashrc"
+export TERMINAL="$HOME/terminal/"
 
 export TRASH="$HOME/.local/share/Trash/files"
 
