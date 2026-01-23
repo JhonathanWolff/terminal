@@ -16,4 +16,5 @@ curl -sL https://raw.githubusercontent.com/JhonathanWolff/terminal/refs/heads/ma
 # Links
 
 * [Terminal Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip)
+    * Avoid Mono
 
