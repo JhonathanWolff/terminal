@@ -4,4 +4,5 @@ __pycache__/*
 querys.json
 *.pyc
 terminal_functions/gcp_roles.json
+*.log
 
