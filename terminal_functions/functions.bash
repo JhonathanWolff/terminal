@@ -146,6 +146,9 @@ function ts {
     tmux a -t $(tmux ls | grep : | cut -d : -f1 | fzf --tmux 90%)
 
 }
+function cheat {
+    curl cheat.sh/$1
+}
 
 
 function ta {

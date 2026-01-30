@@ -1,4 +1,9 @@
 {
+
+    "impulsomidia": {
+        "resource": "get_data",
+        "collection_id": "advertisers"
+    },
     "adobeanalytics": {
         "resource": "orchestration",
         "collection_id": "reportsuites"

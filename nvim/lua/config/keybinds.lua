@@ -14,6 +14,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true })
 vim.api.nvim_set_keymap("i", "jk", "<esc>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>qq", ":q!<CR>", { noremap = true })
 
 --buffer
 vim.api.nvim_set_keymap("n", "<leader>bc", ":bd<CR>", { noremap = true, desc = "Close current Buffer" })
@@ -48,3 +49,8 @@ vim.api.nvim_set_keymap("n", "<C-k>", ":wincmd k<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", ":wincmd j<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", ":wincmd h<CR>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", ":wincmd l<CR>", { silent = true })
+
+
+
+--LSP
+vim.api.nvim_set_keymap('n', '<space>se', '<cmd>lua vim.diagnostic.open_float()<CR>', {noremap=true, silent=true})

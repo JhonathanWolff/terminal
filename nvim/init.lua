@@ -25,3 +25,4 @@ vim.o.softtabstop = 4
 vim.o.expandtab = true 
 vim.o.autoindent = true   
 
+--vim.g.vimspector_enable_mappings = 'HUMAN'
