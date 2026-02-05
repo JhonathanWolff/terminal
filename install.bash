@@ -92,6 +92,9 @@ wget https://luarocks.org/releases/luarocks-3.13.0.tar.gz &&  tar zxpf luarocks-
 mkdir -p $HOME/.config/tmux/plugins/catppuccin
 git clone -b v2.1.2 https://github.com/catppuccin/tmux.git $HOME/.config/tmux/plugins/catppuccin/tmux
 
+# K9s
+wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && sudo  rm k9s_linux_amd64.deb
+
 
 #CONFIGURACAO VARIAVEL
 
