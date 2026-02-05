@@ -95,6 +95,14 @@ git clone -b v2.1.2 https://github.com/catppuccin/tmux.git $HOME/.config/tmux/pl
 # K9s
 wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && sudo  rm k9s_linux_amd64.deb
 
+#theme
+cat <<EOF > "${XDG_CONFIG_HOME:-$HOME/.config}/k9s/config.yaml"
+k9s:
+  ui:
+    skin: catppuccin-mocha
+EOF
+
+
 
 #CONFIGURACAO VARIAVEL
 
