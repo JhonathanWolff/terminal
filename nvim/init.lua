@@ -26,6 +26,8 @@ vim.o.expandtab = true
 vim.o.autoindent = true   
 
 
+-- extra lsp config
+require("config.lsp_configs")
 
 -- Dap
 --require("config.daps.python")

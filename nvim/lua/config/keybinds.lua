@@ -59,5 +59,11 @@ vim.api.nvim_set_keymap('n', '<space>se', '<cmd>lua vim.diagnostic.open_float()<
 --Lens 
 vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,silent=true,desc="Toggle Error Lens"})
 
+
+--docstring generator
+--
+vim.api.nvim_set_keymap("n","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
+vim.api.nvim_set_keymap("v","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
+
 --Debuger
 
