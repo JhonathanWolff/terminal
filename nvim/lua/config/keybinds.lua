@@ -37,8 +37,6 @@ vim.api.nvim_set_keymap("n", "zs", ":w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>", ":q<CR>", { noremap = true })
 
--- LSP
-vim.keymap.set("n", "<leader>F", vim.lsp.buf.format, { desc = "Format File" })
 
 --TELESCOPE
 --vim.api.nvim_set_keymap("n", "ga", ":Telescope lsp_incoming_calls<CR>", { noremap = false, silent = true })
@@ -56,7 +54,7 @@ vim.api.nvim_set_keymap("n", "<C-l>", ":wincmd l<CR>", { silent = true })
 vim.api.nvim_set_keymap('n', '<space>se', '<cmd>lua vim.diagnostic.open_float()<CR>', {noremap=true, silent=true})
 
 
---Lens 
+--Lens
 vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,silent=true,desc="Toggle Error Lens"})
 
 
