@@ -14,7 +14,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true })
 vim.api.nvim_set_keymap("i", "jk", "<esc>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>qq", ":q!<CR>", { noremap = true })
+--vim.api.nvim_set_keymap("n", "<leader>qq", ":q!<CR>", { noremap = true })
 
 --buffer
 vim.api.nvim_set_keymap("n", "<leader>bc", ":bd<CR>", { noremap = true, desc = "Close current Buffer" })
@@ -65,5 +65,16 @@ vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,si
 vim.api.nvim_set_keymap("n","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
 vim.api.nvim_set_keymap("v","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
 
---Debuger
 
+
+-- quick fix
+vim.keymap.set("n", "<leader>qq", function()
+  require("quicker").toggle()
+end, {
+  desc = "Toggle quickfix",
+})
+vim.keymap.set("n", "<leader>ql", function()
+  require("quicker").toggle({ loclist = true })
+end, {
+  desc = "Toggle loclist",
+})
