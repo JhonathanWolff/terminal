@@ -38,11 +38,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[%s/\s\+$//e]],
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
---   group = vim.api.nvim_create_augroup("EnableTreesitterHighlighting", { clear = true }),
---   desc = "Try to enable tree-sitter syntax highlighting",
---   pattern = "*", -- run on *all* filetypes
---   callback = function()
---     pcall(function() vim.treesitter.start() end)
---   end,
--- })
+-- Make treesite highlight functions and classes
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("EnableTreesitterHighlighting", { clear = true }),
+  desc = "Try to enable tree-sitter syntax highlighting",
+  pattern = "*", -- run on *all* filetypes
+  callback = function()
+    pcall(function() vim.treesitter.start() end)
+  end,
+})
