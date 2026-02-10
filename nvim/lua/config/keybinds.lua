@@ -35,6 +35,7 @@ vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
 -- comand line
 vim.api.nvim_set_keymap("n", "zs", ":w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-s>", ":w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-w>", ":q<CR>", { noremap = true })
 
 
@@ -59,9 +60,18 @@ vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,si
 
 
 --docstring generator
---
 vim.api.nvim_set_keymap("n","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
 vim.api.nvim_set_keymap("v","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
+
+
+-- Debugger
+local dap =require("dap")
+local dap_view =require("dap-view")
+vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, {desc="Dap Toogle BreakPoint"})
+vim.keymap.set("n", "<leader>dd", dap.continue, {desc="DAP Continue"})
+vim.keymap.set("n", "<leader>di", dap.step_into, {desc="DAP Step Into"})
+vim.keymap.set("n", "<leader>ds", dap.disconnect, {desc="DAP Disconnect"})
+vim.keymap.set("n", "<leader>dvc", dap_view.toggle, {desc="DAP View Toggle"})
 
 
 
