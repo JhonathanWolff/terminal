@@ -42,7 +42,21 @@ def run(project):
 
     resp = do_request(project,api_selected,user_selected)
 
-    sys.stdout.write(json.dumps(resp))
+    sys.stdout.write(json.dumps(fix_strings(resp)))
+
+
+def fix_strings(obj):
+    """Fix strings with invalid backslash sequences"""
+    if isinstance(obj, dict):
+        return {k: fix_strings(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [fix_strings(item) for item in obj]
+    elif isinstance(obj, str):
+        # Replace single backslashes with double backslashes
+        # But only if not already escaped
+        obj = obj.replace('\\', '\\\\')
+        return obj
+    return obj
 
 
 

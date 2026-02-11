@@ -84,7 +84,7 @@ function gcp_curl_post {
     REGION="us-central1"
     PROJECT=$(gcloud projects list --format="value(projectId)" | fzf --tmux 90% --prompt="Selecione o Projeto> ")
     PAYLOAD_PATH="$HOME/.payloads"
-    mkdir -p "${PAYLOAD_PATH}" 
+    mkdir -p "${PAYLOAD_PATH}"
     while getopts "s:n:r:" flag;
     do
         case "${flag}" in
@@ -120,7 +120,7 @@ function gcp_curl_post {
     do
       nvim $PAYLOAD_FILE
       PAYLOAD=$(cat $PAYLOAD_FILE)
-      echo $PAYLOAD | jq 
+      echo $PAYLOAD | jq
       curl -X POST "$URL" \
       -H "Authorization: bearer $(gcloud auth print-identity-token)" \
       -H "Content-Type: application/json" \
@@ -137,7 +137,7 @@ function gcp_sa_impersonate {
   CURRENT_DIR=$(pwd)
   gcloud auth revoke
   gcloud auth application-default revoke
-  gcloud auth activate-service-account  $( cat "${CURRENT_DIR}/${FILE}" | jq -r '.client_email' ) --key-file="${CURRENT_DIR}/${FILE}" 
+  gcloud auth activate-service-account  $( cat "${CURRENT_DIR}/${FILE}" | jq -r '.client_email' ) --key-file="${CURRENT_DIR}/${FILE}"
 }
 
 function iam_add {
@@ -154,7 +154,7 @@ function iam_add {
       echo "Clearing Roles Cache..."
       rm "${HOME}/terminal/terminal_functions/gcp_roles.json"
     fi
-    
+
    if [ ! -e "${HOME}/terminal/terminal_functions/gcp_roles.json" ];
    then
      echo "Populating GCP Roles...."
@@ -197,7 +197,7 @@ function iam_add {
         fi
 
         ORIGINAL_EMAIL="${USER_EMAIL}"
-        
+
         if [[ $IS_SA = "Y" || $IS_SA = "y" ]];
         then
           USER_EMAIL="serviceAccount:${USER_EMAIL}"
@@ -265,7 +265,7 @@ function cloudfunction_collectionids {
   result=$(python list_collectionid.py $project)
 
   if [[ $? == 0 ]]; then
-    echo $result | jq
+    echo "${result}"
   else
     echo $result
   fi
@@ -386,7 +386,7 @@ function run_report_v2 {
         REPORTS=$(IFS=, ; echo "${REPORTS[*]}")
         python $HOME/terminal/terminal_python/run_report_v2.py "${PROJECT_ID}" "${CLIENT}" "${API}" "${REPORTS}"
       done
-      
+
 
     done
 
@@ -441,220 +441,7 @@ function run_report {
 }
 
 
-function datasink_transfers {
 
-  figlet datasink -f slant
-  work_time
-  current_dir=$(pwd)
-  cd $HOME/terminal/terminal_python/bq
-
-  if [[ $# -eq 0 ]]; then
-      cd querys
-  else
-      project_selected=$(gcloud projects list --format="value(PROJECT_ID)" --filter="parent.id:449413397360 OR parent.id:57669729297 OR parent.id:942946519066" | fzf --tmux 90%)
-      rm -rf querys
-      bq ls --transfer_config --transfer_location=US --format=prettyjson --project_id=$project_selected  --max_rows_per_request=1000 | jq -c '.[]' > querys.json
-      mkdir querys
-      python parse.py
-
-
-    if [[ "$*" == *"-ddl"* ]]
-    then
-
-      echo "Updating DDL Information"
-      for query in $(ls querys);
-      do
-          table_name=$(echo $query  | sed -r 's/\.sql//g')
-          echo "* $table_name"
-          result=$(bq show --format=prettyjson --project_id=$project_selected $table_name | jq '.schema.fields.[].name')
-          echo "\n/*\n \
-          DDL TABLE \n \
-          $result \
-          \n*/" >> querys/$query
-      done
-
-    fi
-
-
-      cd querys
-  fi
-
-  oo
-  cd $current_dir
-
-}
-
-function datasink_contains {
-
-  figlet datasink -f slant
-  work_time
-  current_dir=$(pwd)
-  cd $HOME/terminal/terminal_python/bq
-  echo "Searching Argument : $1"
-
-  if [[ -d $HOME/terminal/terminal_python/bq/querys && -n "$(ls -A $HOME/terminal/terminal_python/bq/querys)" && "$*" != *"-u"* ]]; then
-    echo "==========================="
-  else
-      echo "Populating with new Information..."
-      project_selected=$(gcloud projects list --format="value(PROJECT_ID)" --filter="parent.id:449413397360 OR parent.id:57669729297 OR parent.id:942946519066" | fzf --tmux 90%)
-      rm -rf querys
-      bq ls --transfer_config --transfer_location=US --format=prettyjson --project_id=$project_selected --max_rows_per_request=1000 | jq -c '.[]' > querys.json
-      mkdir querys
-      python parse.py
-
-    if [[ "$*" == *"-ddl"* ]]
-    then
-
-      echo "Updating DDL Information"
-      for query in $(ls querys);
-      do
-          table_name=$(echo $query  | sed -r 's/\.sql//g')
-          echo "* $table_name"
-          result=$(bq show --format=prettyjson --project_id=$project_selected $table_name | jq '.schema.fields.[].name')
-          echo "\n/*\n \
-          DDL TABLE \n \
-          $result \
-          \n*/" >> querys/$query
-      done
-
-    fi
-
-      echo "==========================="
-  fi
-
-  cd $HOME/terminal/terminal_python/bq/querys
-  rg . --no-ignore-vcs | grep "$1" | sed  -r 's/([0-9A-z\-_\.]+):.*/\1/g' | sed -r 's/^([0-9A-z_\-]+\.)([0-9A-z\-_]+).sql/\2/g' | xargs -n1 | sort -u
-  echo "==========================="
-  cd $current_dir
-
-}
-
-
-function magrathea_start {
-
-    CLEAR="false"
-    BUILD="false"
-    START="false"
-    APPEND="false"
-
-    for arg in $@
-    do
-      case $arg in
-
-            "-b")
-                BUILD="true"
-              ;;
-            "-a")
-                APPEND="true"
-              ;;
-
-            "-h")
-                echo "
-                  -b : Build magrathea with new repositories
-                  -a : Append new repositories to magrathea
-
-                  Usage
-                  magrathea_start -b will build magrathea with new repositories
-                  magrathea_start -a will append new repositories to magrathea
-                  "
-                  return 0
-              ;;
-
-        esac
-    done
-
-
-    CURRENT_DIR=$(pwd)
-    MAGRATHEA_FOLDER="$WORK/github/magrathea"
-    MAGRATHEA_REPOSITORIES_PATH="$MAGRATHEA_FOLDER/repositories.txt"
-    cd $MAGRATHEA_FOLDER
-
-    if [[ $BUILD == "false" ]];
-    then
-        echo "::::: BUILDING MAGRATHEA WITHOUT UPDATING REPOSITORIES :::::"
-        docker compose up
-        cd $CURRENT_DIR
-        exit 1
-    fi
-
-
-    already=$(cat $MAGRATHEA_REPOSITORIES_PATH)
-
-
-    if [[ $APPEND == "false" ]];
-    then
-        rm $MAGRATHEA_REPOSITORIES_PATH
-    fi
-
-    repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | .name' | fzf --tmux 90% -m)
-
-    FIRST="true"
-    for git_repository in $(echo $repository_name);
-    do
-
-        if [[ $APPEND == "true"  && $(echo $already | grep $git_repository | wc -l ) -eq 1 ]];
-        then
-            continue
-        fi
-
-        if [[ $APPEND == "true"  && $FIRST="true" ]];
-        then
-            echo -e "\n" >> $MAGRATHEA_REPOSITORIES_PATH
-            FIRST="false"
-        fi
-
-        branch=$(gh api /repos/VMLYR/$git_repository/branches --jq '.[].name' | fzf --prompt="Branch for Repository $git_repository: " --tmux )
-
-        if [[ -z $branch ]];
-        then
-            branch="main"
-        fi
-
-        echo "$git_repository:$branch" >> $MAGRATHEA_REPOSITORIES_PATH
-    done
-
-    python create_docker_files.py
-    echo "::::: BUILDING MAGRATHEA WITH NEW REPOSITORIES :::::"
-    docker compose up
-    #docker compose up --force-recreate
-
-    cd $CURRENT_DIR
-
-}
-
-function find_googleapis {
-    CURRENT_DIR=$(pwd)
-    DISCOVERY_URL="https://discovery.googleapis.com/discovery/v1/apis"
-    SCOPE_PATH="/tmp/scopes"
-    mkdir -p "${SCOPE_PATH}"
-    for line in $(curl -s "$DISCOVERY_URL" | jq -c '.items[] | select(.preferred) | {name: .name , description: .description, doc : .documentationLink, title: .title} |@base64');
-    do
-        row=$(echo "$line" | base64 -di)
-        
-
-        name=$(echo "${row}" | jq  -r ".name")
-        title=$(echo "${row}" | jq  -r ".title")
-        description=$(echo "${row}" | jq -r ".description")
-        doc=$(echo "${row}" | jq -r ".doc")
-        echo """
-# ${title}
-
-    * resource : ${name}
-
-## Description
-
-${description}
-
-scope url : ${doc}
-
-        """ > "${SCOPE_PATH}/${name}.md" 
-    done
-    cd "${SCOPE_PATH}"
-    nvim 
-    cd "${CURRENT_DIR}"
-
-
-}
 
 function gcp_function_copy_envs {
 
