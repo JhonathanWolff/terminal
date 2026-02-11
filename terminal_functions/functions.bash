@@ -176,12 +176,6 @@ function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
 
-function live_server {
-    open "http://localhost:8080"
-    sudo python3 -m http.server 8080
-}
-
-
 
 #call work_time_to_create env
 work_time
