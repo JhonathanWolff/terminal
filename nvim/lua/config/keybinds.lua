@@ -35,7 +35,8 @@ vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
 -- comand line
 vim.api.nvim_set_keymap("n", "zs", ":w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-s>", ":w<CR>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-s>", "<cmd>w<CR>", { noremap = true })
+
 vim.api.nvim_set_keymap("n", "<C-w>", ":q<CR>", { noremap = true })
 
 

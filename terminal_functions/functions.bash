@@ -88,7 +88,7 @@ function update_terminal {
   sudo cp -r ~/.config/nvim $HOME/terminal/
   sudo cp $STARSHIP_CONFIG $HOME/terminal/starship/starship.toml
   sudo cp $HOME/work/work_envs/requirements.txt $HOME/terminal/terminal_python/requirements.txt
-  
+
   cd $TERMINAL
   lazygit
 
@@ -162,6 +162,8 @@ function ta {
 
 }
 
+
+
 function fjq {
   echo "" | fzf --tmux 90% --phony --print-query  --preview "jq --color-output  {q} < $1 " --preview-window='up:95%'
 }
@@ -173,6 +175,13 @@ function git_diff {
 function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
+
+function live_server {
+    open "http://localhost:8080"
+    sudo python3 -m http.server 8080
+}
+
+
 
 #call work_time_to_create env
 work_time
