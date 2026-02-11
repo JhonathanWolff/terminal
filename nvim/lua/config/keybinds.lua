@@ -70,6 +70,7 @@ local dap_view =require("dap-view")
 vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, {desc="Dap Toogle BreakPoint"})
 vim.keymap.set("n", "<leader>dd", dap.continue, {desc="DAP Continue"})
 vim.keymap.set("n", "<leader>di", dap.step_into, {desc="DAP Step Into"})
+vim.keymap.set("n", "<leader>do", dap.step_out, {desc="DAP Step Out"})
 vim.keymap.set("n", "<leader>ds", dap.disconnect, {desc="DAP Disconnect"})
 vim.keymap.set("n", "<leader>dvc", dap_view.toggle, {desc="DAP View Toggle"})
 
