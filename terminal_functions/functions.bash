@@ -178,7 +178,7 @@ function find_methods {
 
 function live_server {
     #sudo npm i reload -g
-    reload
+    reload -b
 
 }
 
