@@ -176,6 +176,12 @@ function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
 
+function live_server {
+    #sudo npm i reload -g
+    reload
+
+}
+
 
 #call work_time_to_create env
 work_time

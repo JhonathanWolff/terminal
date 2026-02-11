@@ -85,6 +85,9 @@ curl -L -R -O https://www.lua.org/ftp/lua-5.5.0.tar.gz && tar zxf lua-5.5.0.tar.
 wget https://luarocks.org/releases/luarocks-3.13.0.tar.gz &&  tar zxpf luarocks-3.13.0.tar.gz &&  cd luarocks-3.13.0 && sudo ./configure && sudo make && sudo make install &&  sudo luarocks install luasocket
 
 
+#install live reload for html file
+sudo npm i reload -g
+
 
 #themes
 
