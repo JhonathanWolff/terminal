@@ -55,6 +55,8 @@ vim.api.nvim_set_keymap("n", "<C-l>", ":wincmd l<CR>", { silent = true })
 --LSP
 vim.api.nvim_set_keymap('n', '<space>se', '<cmd>lua vim.diagnostic.open_float()<CR>', {noremap=true, silent=true})
 
+vim.keymap.set('n', '<leader>rr', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, wrap = true }) end, {noremap=true,silent=true, desc="Go To Next Error"})
+vim.keymap.set('n', '<leader>rR', function() vim.diagnostic.goto_previous({ severity = vim.diagnostic.severity.ERROR, wrap = true }) end, {noremap=true,silent=true, desc="Go To Next Error"})
 
 --Lens
 vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,silent=true,desc="Toggle Error Lens"})

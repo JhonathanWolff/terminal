@@ -22,7 +22,8 @@ vim.o.expandtab = true
 vim.o.autoindent = true
 
 
-
+-- remove tab winbar
+vim.opt.showtabline = 0
 
 
 -- Dap
