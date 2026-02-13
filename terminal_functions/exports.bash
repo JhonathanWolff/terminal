@@ -16,6 +16,8 @@ export TERM_CONFIG="$HOME/terminal"
 export SUDO_EDITOR=nvim
 export EDITOR=nvim
 
+export VIM_CONFIG="${HOME}/.config/nvim"
+
 
 #hist size
 export HISTSIZE=500
