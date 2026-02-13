@@ -25,6 +25,11 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, desc = "Close all buffers except this one" }
 )
 
+--Jumplist
+vim.keymap.set('n', '<C-o>', '<C-o>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-i>', '<C-i>zz', { noremap = true, silent = true })
+
+
 --editor
 vim.keymap.set("n", "|", ":vsplit<CR>", { noremap = true })
 

@@ -60,4 +60,14 @@ vim.lsp.config("yamlls", -- LSP yaml-language-server
    },
  })
 
+ vim.lsp.config("pyright",{
+     settings = {
+         python = {
+             analysis = {
+                 typeCheckingMode = "off",
+             }
+         }
+     }
+ })
+
 
