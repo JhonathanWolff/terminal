@@ -8,6 +8,6 @@ return {
     },
     opts = {
         -- your options go here
-        enabled = false
+        enabled = true
     },
 }

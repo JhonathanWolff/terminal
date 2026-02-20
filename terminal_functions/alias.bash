@@ -8,6 +8,8 @@ alias open_folder='explorer.exe .'
 alias fd='fdfind'
 alias lg='lazygit'
 
+alias vi='nvim'
+
 
 #Alias WSl
 alias open='explorer.exe'

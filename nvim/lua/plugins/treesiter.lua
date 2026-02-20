@@ -18,6 +18,8 @@ return {
 			"typescript",
 			"vimdoc",
 			"vim",
+			"markdown",
+			"latex"
 		}) --:wait(300000)
 		treesiter.setup()
 	end,
