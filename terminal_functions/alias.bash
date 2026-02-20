@@ -4,6 +4,8 @@
 alias python='python3'
 alias open_folder='explorer.exe .'
 
+alias spell='cspell --color -c "/home/jwolff/.cspell/cspell.json"'
+
 
 alias fd='fdfind'
 alias lg='lazygit'

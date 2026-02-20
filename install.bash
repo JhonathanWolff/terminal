@@ -87,6 +87,24 @@ wget https://luarocks.org/releases/luarocks-3.13.0.tar.gz &&  tar zxpf luarocks-
 
 #install live reload for html file
 sudo npm i reload -g
+#spell check
+sudo npm install -g cspell
+mkdir $HOME/.cspell
+echo "bigquery" >> $HOME/.cspell/custom-words.txt
+cat > $HOME/.cspell/cspell2.json << 'EOF'
+{
+    "dictionaries": ["custom-words"],
+
+    "dictionaryDefinitions": [
+        {
+            "name": "custom-words",
+            "path": "./custom-words.txt",
+            "addWords": true
+        }
+    ]
+}
+EOF
+
 
 
 #themes
