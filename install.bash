@@ -96,7 +96,7 @@ mkdir -p $HOME/.config/tmux/plugins/catppuccin
 git clone -b v2.1.2 https://github.com/catppuccin/tmux.git $HOME/.config/tmux/plugins/catppuccin/tmux
 
 # K9s
-wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && sudo  rm k9s_linux_amd64.deb
+#wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb && sudo apt install ./k9s_linux_amd64.deb && sudo  rm k9s_linux_amd64.deb
 
 #theme
 cat <<EOF > "${XDG_CONFIG_HOME:-$HOME/.config}/k9s/config.yaml"
@@ -138,6 +138,7 @@ sudo cp $TERMINAL/starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/zsh/plugins
 sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
 sudo git clone https://github.com/zsh-users/zsh-autosuggestions.git $HOME/.config/zsh/plugins/zsh-autosuggestions
+sudo git clone https://github.com/jeffreytse/zsh-vi-mode.git $HOME/.config/zsh/plugins/zsh-vi-mode
 #sudo git clone https://github.com/jeffreytse/zsh-vi-mode.git $HOME/.config/zsh/plugins/zsh-vi-mode
 
 
