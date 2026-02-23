@@ -71,6 +71,15 @@ vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,si
 vim.api.nvim_set_keymap("n","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
 vim.api.nvim_set_keymap("v","<leader>md","<Plug>(pydocstring)",{noremap=true,silent=true,desc="Make Docstring Google Style"})
 
+--quickfix
+vim.keymap.set('n', '<A-j>', ':cnext<CR>zz', { desc = 'Next Quickfix', silent = true })
+vim.keymap.set('n', '<A-k>', ':cprev<CR>zz', { desc = 'Previous Quickfix', silent = true })
+
+
+-- big jump
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Big Jump', silent = true })
+vim.keymap.set('n', '<C-u>', '<C-u><CR>zz', { desc = 'Big Jump', silent = true })
+
 
 -- Debugger
 local dap =require("dap")

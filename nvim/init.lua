@@ -1,3 +1,4 @@
+
 vim.opt.termguicolors = true
 vim.opt.wrap = false
 
