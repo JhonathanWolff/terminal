@@ -12,6 +12,8 @@ return
 		vim.keymap.set('n', '<leader>fw', builtin.live_grep, { desc = 'Telescope live grep' })
 		vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 		vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-    	
+
+        -- folke todo
+        vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open Telescope TODO List" })
     end
 }
