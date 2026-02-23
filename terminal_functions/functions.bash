@@ -88,6 +88,7 @@ function update_terminal {
   sudo cp -r ~/.config/nvim $HOME/terminal/
   sudo cp $STARSHIP_CONFIG $HOME/terminal/starship/starship.toml
   sudo cp $HOME/work/work_envs/requirements.txt $HOME/terminal/terminal_python/requirements.txt
+  sudo cp $HOME/.config/lazygit/config.yml $HOME/terminal/lazygit/config.yml
 
   cd $TERMINAL
   lazygit
