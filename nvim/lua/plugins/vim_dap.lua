@@ -10,7 +10,9 @@ return {
 		local dap = require("dap")
         require('dap-python').setup()
 
-        require("nvim-dap-virtual-text").setup()
+        require("nvim-dap-virtual-text").setup({
+            enabled=false
+        })
 
         local dapview = require("dap-view")
         dapview.setup() -- Ensure dap-view is set up

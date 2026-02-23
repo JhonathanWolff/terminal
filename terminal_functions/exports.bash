@@ -13,6 +13,8 @@ export TRASH="$HOME/.local/share/Trash/files"
 export NVIM_SWAP="$HOME/.local/state/nvim/swap"
 export TERM_CONFIG="$HOME/terminal"
 
+export FUNCNEST=10000
+
 export SUDO_EDITOR=nvim
 export EDITOR=nvim
 

@@ -446,8 +446,9 @@ function run_report {
 function gcp_function_copy_envs {
 
   project_id=$(gcloud projects list --format="value(projectId)" | fzf --tmux );
-  function_name=$(gcloud functions list --format="value(name)" --project "${project_id}" | fzf --tmux );
-  gcloud functions describe "${function_name}" --project="${project_id}" --format=json | jq  ".serviceConfig.environmentVariables" > gcp_env.json
+  function_name=$(gcloud functions list --format="value(name)" --project "${project_id}" | fzf --tmux  | sed "s/-/_/g");
+  selected_region=$(printf "%s\n" "${GCP_REGIONS[@]}"  | fzf)
+  gcloud functions describe "${function_name}" --project="${project_id}" --format=json  --region="${selected_region}" | jq  ".serviceConfig.environmentVariables" > gcp_env.json
 
   echo '''
 import os

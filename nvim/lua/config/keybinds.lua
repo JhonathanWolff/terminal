@@ -92,6 +92,7 @@ vim.keymap.set("n", "<leader>do", dap.step_out, {desc="DAP Step Out"})
 vim.keymap.set("n", "<leader>ds", dap.disconnect, {desc="DAP Disconnect"})
 vim.keymap.set("n", "<leader>dvc", dap_view.toggle, {desc="DAP View Toggle"})
 
+vim.keymap.set("n", "<leader>dvv", "<cmd>DapVirtualTextToggle<CR>", {desc="DAP Text View Toggle"})
 
 
 -- quick fix
