@@ -8,7 +8,7 @@ sudo apt-get install git git-delta -y
 sudo apt-get install python3 -y
 sudo apt-get install python3-pip -y
 sudo apt-get install nodejs npm -y
-sudo apt-get install jq tmux zsh ripgrep bat fd-find wget curl vim -y
+sudo apt-get install jq tmux zsh ripgrep bat fd-find wget curl vim dos2unix -y
 sudo apt install trash-cli -y
 sudo apt install -y gpg
 sudo apt-get install apt-transport-https ca-certificates gnupg -y

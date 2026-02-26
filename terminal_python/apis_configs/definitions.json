@@ -4,6 +4,10 @@
         "resource": "get_data",
         "collection_id": "advertisers"
     },
+    "spotifyads": {
+        "resource": "get_data",
+        "collection_id": "accounts"
+    },
     "adobeanalytics": {
         "resource": "orchestration",
         "collection_id": "reportsuites"

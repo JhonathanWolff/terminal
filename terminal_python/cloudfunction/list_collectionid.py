@@ -42,7 +42,10 @@ def run(project):
 
     resp = do_request(project,api_selected,user_selected)
 
-    sys.stdout.write(json.dumps(fix_strings(resp)))
+    try:
+        sys.stdout.write(json.dumps(fix_strings(resp)))
+    except:
+        sys.stdout.write(resp)
 
 
 def fix_strings(obj):

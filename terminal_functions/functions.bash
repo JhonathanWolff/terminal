@@ -183,6 +183,10 @@ function live_server {
 
 }
 
+function crl_to_lf {
+    fd . -t f | xargs dos2unix
+}
+
 
 #call work_time_to_create env
 work_time
