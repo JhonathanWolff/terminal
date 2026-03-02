@@ -28,6 +28,7 @@ vim.api.nvim_set_keymap(
 --Jumplist
 vim.keymap.set('n', '<C-o>', '<C-o>zz', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-i>', '<C-i>zz', { noremap = true, silent = true })
+vim.keymap.set('n', 'n', 'nzz', { noremap = true, silent = true })
 
 
 --editor
