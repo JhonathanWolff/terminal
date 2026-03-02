@@ -65,6 +65,7 @@ vim.lsp.config("yamlls", -- LSP yaml-language-server
          python = {
              analysis = {
                  typeCheckingMode = "off",
+                 extraPaths = {"/home/jwolff/work/github/magrathea/magrathea_package"}
              }
          }
      }
