@@ -5,6 +5,9 @@ return {
 	config = function()
 		local treesiter = require("nvim-treesitter")
 		treesiter.install({
+            "dockerfile",
+            "terraform",
+            "csv",
 			"html",
 			"css",
 			"go",

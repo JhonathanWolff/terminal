@@ -334,7 +334,7 @@ function kms_encrypt {
     fi
   done
 
-  result=$(python3 encrypt.py $@)
+  python3 encrypt.py $@
   cd $current_dir
 
 }

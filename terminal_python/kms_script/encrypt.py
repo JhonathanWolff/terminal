@@ -3,7 +3,6 @@
 import os
 import json
 import sys
-import logging
 import api
 
 
@@ -18,6 +17,7 @@ def encrypt(project_id,file_path,replace=False):
         data = json.load(f)
 
     kms = api.get_api(project_id)
+
     data = kms.encrypt_symmetric(data)
 
     if not replace:
@@ -66,6 +66,7 @@ if __name__ == "__main__":
     if project_id is None:
         sys.stdout.write("Missing project id")
         exit(1)
+
 
 
     os.environ["FUNCTION_NAME"] = "shell_script"
