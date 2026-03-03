@@ -21,12 +21,13 @@ _elapsed "Functions Loaded"
 
 
 ZSH_CUSTOM="$HOME/.config/zsh"
+source "${ZSH_CUSTOM}/zsh-defer/zsh-defer.plugin.zsh"
 
 #https://github.com/zsh-users/zsh-autosuggestions
 #https://github.com/zsh-users/zsh-syntax-highlighting
 for plugin in $(ls $ZSH_CUSTOM/plugins);
 do
-    source "$ZSH_CUSTOM/plugins/$plugin/$plugin.zsh"
+    zsh-defer source "$ZSH_CUSTOM/plugins/$plugin/$plugin.zsh"
 done
 _elapsed "ZSH Loaded"
 

@@ -91,7 +91,7 @@ sudo npm i reload -g
 sudo npm install -g cspell
 mkdir $HOME/.cspell
 echo "bigquery" >> $HOME/.cspell/custom-words.txt
-cat > $HOME/.cspell/cspell2.json << 'EOF'
+cat > $HOME/.cspell/cspell.json << 'EOF'
 {
     "dictionaries": ["custom-words"],
 
@@ -149,7 +149,9 @@ sudo cp $TERMINAL/tmux/.tmux.conf $HOME/.tmux.conf
 sudo cp $TERMINAL/terminal/.bashrc $HOME/.bashrc
 sudo cp $TERMINAL/terminal/.zshrc $HOME/.zshrc
 sudo cp $TERMINAL/starship/starship.toml $HOME/.config/starship.toml
-sudo cp $TERMINAL/lazygit/config.yml $(lazygit --print-config-dir)
+
+mkdir -p "${HOME}/.config/lazygit"
+sudo cp $TERMINAL/lazygit/config.yml "${HOME}/.config/lazygit"
 
 
 #ZSH plugins
@@ -157,8 +159,9 @@ mkdir -p $HOME/.config/zsh/plugins
 sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
 sudo git clone https://github.com/zsh-users/zsh-autosuggestions.git $HOME/.config/zsh/plugins/zsh-autosuggestions
 sudo git clone https://github.com/jeffreytse/zsh-vi-mode.git $HOME/.config/zsh/plugins/zsh-vi-mode
-#sudo git clone https://github.com/jeffreytse/zsh-vi-mode.git $HOME/.config/zsh/plugins/zsh-vi-mode
 
+#zsh defer for side load plugins
+sudo git clone https://github.com/romkatv/zsh-defer.git $HOME/.config/zsh/zsh-defer
 
 
 #tmux plugin
