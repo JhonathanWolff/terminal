@@ -9,7 +9,8 @@ return
             lua = { "stylua" },
             python = { "autopep8" },
             bash = {"shfmt"},
-            sh = {"shfmt"}
+            sh = {"shfmt"},
+            zsh = {"beautysh"}
             -- javascript = { "prettierd", "prettier", stop_after_first = true },
           },
         })
