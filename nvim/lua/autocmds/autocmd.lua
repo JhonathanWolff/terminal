@@ -47,3 +47,4 @@ vim.api.nvim_create_autocmd("FileType", {
     pcall(function() vim.treesitter.start() end)
   end,
 })
+

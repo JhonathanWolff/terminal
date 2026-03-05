@@ -15,7 +15,6 @@ require("config.lazy")
 require("config.keybinds")
 
 
-
 vim.cmd.colorscheme "catppuccin"
 vim.opt.clipboard = "unnamedplus"
 

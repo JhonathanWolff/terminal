@@ -1,5 +1,7 @@
 vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+vim.keymap.set("n", "i", "<CMD>nohlsearch<CR>i", { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap("x", "p", "pgvy", { noremap = true, silent = true })
 
 -- comment line
