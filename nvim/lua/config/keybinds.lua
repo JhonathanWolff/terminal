@@ -63,6 +63,8 @@ vim.api.nvim_set_keymap('n', '<space>se', '<cmd>lua vim.diagnostic.open_float()<
 
 vim.keymap.set('n', '<leader>rr', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, wrap = true }) end, {noremap=true,silent=true, desc="Go To Next Error"})
 vim.keymap.set('n', '<leader>rR', function() vim.diagnostic.goto_previous({ severity = vim.diagnostic.severity.ERROR, wrap = true }) end, {noremap=true,silent=true, desc="Go To Next Error"})
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap=true, silent=true, desc = "Code Action" })
+vim.keymap.set('n', '<C-.>', vim.lsp.buf.code_action, { noremap=true, silent=true, desc = "Code Action" })
 
 --Lens
 vim.api.nvim_set_keymap("n","<leader>lt",":ErrorLensToggle<CR>",{noremap=true,silent=true,desc="Toggle Error Lens"})

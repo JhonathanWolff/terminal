@@ -7,6 +7,10 @@ vim.g.maplocalleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- cursor line
+vim.opt.cursorline = true
+
+
 require("config.lazy")
 require("config.keybinds")
 
