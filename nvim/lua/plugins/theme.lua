@@ -6,6 +6,7 @@ return {
         transparent_background = true,
         integrations = {
             mason = true,
+            fidget = true
 
         }
 
