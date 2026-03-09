@@ -467,5 +467,10 @@ if "LOCAL_EMULATION" in os.environ:
 
 }
 
+function magrathea_tester {
+    gcloud auth configure-docker us-central1-docker.pkg.dev &>/dev/null
+    docker run -v .:/app -it --rm "us-central1-docker.pkg.dev/hitchhikers-magrathea/magrathea-cicd/magrathea_package_tester:latest" /bin/bash
+}
+
 
 
