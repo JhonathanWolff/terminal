@@ -7,6 +7,8 @@ vim.lsp.config("yamlls", -- LSP yaml-language-server
         yaml = {
             schemas = {
                 ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = {"k8s/**/*.yaml","k8s/*.yaml"},
+                ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/cloudbuild.json"] = {"cloudbuild.yaml","cloudbuild.yml"},
+                ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/github-action.json"] = {".github/workflows/*.yml",".github/workflows/*.yaml"},
             }
         }
     }

@@ -106,6 +106,11 @@ cat > $HOME/.cspell/cspell.json << 'EOF'
 EOF
 
 
+cat > $HOME/.jqp.yaml << 'EOF'
+theme:
+  name: "catppuccin-macchiato"
+EOF
+
 
 #themes
 
