@@ -10,13 +10,28 @@ function dt_log {
 
     REPOSITORY=$(curl -H "Authorization: Bearer ${TOKEN}" "${BASE_URL}/projects/${PROJECT}/locations/${REGION}/repositories" | jq  -r ".repositories[].name" | rev | cut -d "/" -f 1 | rev | fzf --tmux 90% --prompt="Repository> ")
     HEADER="Authorization: Bearer ${TOKEN}"
-      
+
     curl -H "${HEADER}" "${BASE_URL}/projects/${PROJECT}/locations/${REGION}/repositories/${REPOSITORY}/compilationResults/" | jq ".compilationResults[] | select(has(\"compilationErrors\")) | ." > "/tmp/dataform_erros.json"
     nvim "/tmp/dataform_erros.json"
     rm "/tmp/dataform_erros.json"
 
 }
 
+
+function dt_init {
+
+    rm -rf node_modules/ package-lock.json
+    echo "@datasync:registry=https://us-central1-npm.pkg.dev/hitchhikers-magrathea/datasync-nodejs-repository/" > ".npmrc"
+    npx google-artifactregistry-auth --repo-config=./.npmrc --credential-config=./.npmrc
+    if ! grep -q ".npmrc" ".gitignore";
+    then
+        echo -e "\n.npmrc" >> ".gitignore"
+    fi
+
+    npm i
+    dataform init-creds
+    fd .  | grep -E ".sqlx$" | xargs -I {} sed -i 's/for (idTable in groupTables)/for (const idTable in groupTables)/g' {}
+}
 
 
 
@@ -46,7 +61,7 @@ function dt_config {
         git add -A &>/dev/null
         git commit -m "Database Rename" &>/dev/null
     fi
-    
+
 
 }
 
@@ -67,11 +82,11 @@ function dt_rename {
 
     if grep -q "config[[:space:]]*{" "$file"; then
         echo "Processando: $file"
-        
+
         if [ "$BACKUP" = true ]; then
             cp "$file" "${file}.bak"
         fi
-        
+
         if grep -A 20 "config[[:space:]]*{" "$file" | grep -q "schema:"; then
             sed -i.tmp '/config[[:space:]]*{/,/}/ s/schema:[[:space:]]*"[^"]*"/schema:"'$SCHEMA_VALUE'"/g; s/schema:[[:space:]]*'\''[^'\'']*'\''/schema:"'$SCHEMA_VALUE'"/g' "$file"
             echo "  ✓ Schema substituído"
@@ -79,7 +94,7 @@ function dt_rename {
             sed -i.tmp '/config[[:space:]]*{/a\        schema:"'$SCHEMA_VALUE'",' "$file"
             echo "  ✓ Schema adicionado"
         fi
-        
+
         rm -f "${file}.tmp"
     fi
     done
