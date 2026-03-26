@@ -33,6 +33,7 @@ vim.opt.showtabline = 0
 
 -- Dap
 --require("config.daps.python")
+require("config.daps.javascript")
 
 
 --auto CMD

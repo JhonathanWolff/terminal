@@ -95,9 +95,9 @@ def run(project:str,cliente:str,api_selecionada:str,reports:list):
         firestore_ids+="\nall"
 
 
-    collection_id_select = get_fzf(firestore_ids)
+    collection_id_select = get_multi_fzf(firestore_ids)
 
-    if collection_id_select == "all":
+    if collection_id_select[0] == "all":
         collection_id_select = None
 
     if len(reports) > 1 and "all" in reports:
@@ -108,23 +108,43 @@ def run(project:str,cliente:str,api_selecionada:str,reports:list):
         if report_name == "all":
             report_name = None
 
+        if collection_id_select is None:
 
-        payload = build_payload(
-            api=api_selecionada,
-            client=cliente,
-            date_start=start,
-            date_end=end,
-            granularity=granularity_select,
-            report=report_name,
-            collection_key=collection_key,
-            collection_id=collection_id_select,
-            resource=api_resource,
-            creative_flow=creative_flow
-        )
+            payload = build_payload(
+                api=api_selecionada,
+                client=cliente,
+                date_start=start,
+                date_end=end,
+                granularity=granularity_select,
+                report=report_name,
+                collection_key=collection_key,
+                collection_id=collection_id_select,
+                resource=api_resource,
+                creative_flow=creative_flow
+            )
 
-        fid=str(uuid.uuid4())
-        with open(f"/tmp/run_report_v2-{fid}-report_tmp.json","w") as f:
-            f.write(payload)
+            fid=str(uuid.uuid4())
+            with open(f"/tmp/run_report_v2-{fid}-report_tmp.json","w") as f:
+                f.write(payload)
+        else:
+            for coll_id in collection_id_select:
+                payload = build_payload(
+                    api=api_selecionada,
+                    client=cliente,
+                    date_start=start,
+                    date_end=end,
+                    granularity=granularity_select,
+                    report=report_name,
+                    collection_key=collection_key,
+                    collection_id=coll_id,
+                    resource=api_resource,
+                    creative_flow=creative_flow
+                )
+
+                fid=str(uuid.uuid4())
+                with open(f"/tmp/run_report_v2-{fid}-report_tmp.json","w") as f:
+                    f.write(payload)
+
     exit(0)
 
 
@@ -169,9 +189,20 @@ def build_payload(api,client,
     return json.dumps(obj)
 
 
-def get_fzf(text):
+def get_multi_fzf(text):
 
     result = (subprocess.Popen(f'echo "{text}" | fzf --tmux -m ', shell=True, stdout=subprocess.PIPE).
+            stdout.read().decode("utf8").strip())
+
+    if result == None or result == "":
+        sys.stdout.write("Entrada invalida :(")
+        exit(1)
+
+    return result.split("\n")
+
+def get_fzf(text):
+
+    result = (subprocess.Popen(f'echo "{text}" | fzf --tmux ', shell=True, stdout=subprocess.PIPE).
             stdout.read().decode("utf8").replace("\n","").strip())
 
     if result == None or result == "":
