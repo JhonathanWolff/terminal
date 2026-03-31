@@ -4,6 +4,7 @@ function node_install_dev()
 {
     if [[ -f "package.json" ]]; then
         npm install -D @types/node
+        npm install -D js-yaml
     fi
 }
 
