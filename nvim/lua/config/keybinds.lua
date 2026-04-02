@@ -111,3 +111,4 @@ vim.keymap.set("n", "<leader>ql", function()
 end, {
   desc = "Toggle loclist",
 })
+
