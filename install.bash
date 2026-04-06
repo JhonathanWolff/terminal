@@ -73,8 +73,9 @@ sudo apt-get update -y
 sudo apt-get install -y eza
 
 
+NVIM_VERSION="0.11.5"
 sudo apt upgrade -y
-wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.tar.gz
+wget "https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
 tar -xf nvim-linux-x86_64.tar.gz
 sudo cp -r nvim-linux-x86_64/* "/usr/local/" && rm -rf nvim-linux-x86_64 nvim-linux-x86_64.tar.gz
 
@@ -149,7 +150,8 @@ EOF
 
 cd $HOME
 sudo mkdir -p $HOME/.config/zsh/plugins
-sudo cp -r $TERMINAL/nvim $HOME/.config/
+#sudo cp -r $TERMINAL/nvim $HOME/.config/
+sudo git clone https://github.com/JhonathanWolff/nvim.git $HOME/.config/nvim
 sudo cp $TERMINAL/tmux/.tmux.conf $HOME/.tmux.conf
 sudo cp $TERMINAL/terminal/.bashrc $HOME/.bashrc
 sudo cp $TERMINAL/terminal/.zshrc $HOME/.zshrc
