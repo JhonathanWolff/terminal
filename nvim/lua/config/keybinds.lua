@@ -53,10 +53,10 @@ vim.api.nvim_set_keymap("n", "<C-w>", ":q<CR>", { noremap = true })
 vim.api.nvim_set_keymap("v", "<leader>fc", "y<ESC>:Telescope grep_string default_text=<C-R>0<cr>", { noremap = false })
 
 -- move windows
-vim.api.nvim_set_keymap("n", "<C-k>", ":wincmd k<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", "<C-j>", ":wincmd j<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", "<C-h>", ":wincmd h<CR>", { silent = true })
-vim.api.nvim_set_keymap("n", "<C-l>", ":wincmd l<CR>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-k>", ":wincmd k<CR>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-j>", ":wincmd j<CR>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-h>", ":wincmd h<CR>", { silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-l>", ":wincmd l<CR>", { silent = true })
 
 
 
