@@ -46,7 +46,41 @@ GCP_REGIONS=(
   )
 
 
-function cloudbuild_submit_trigger {
+function cloudbuild_republish {
+
+  REGION="us-central1"
+  TRIGGERS=()
+
+  echo "Enter branch Name"
+  read BRANCH
+
+  for PROJECT_ID in $(gcloud projects list --format="value(projectId)" | fzf --tmux -m);
+  do
+
+    if  echo "${PROJECT_ID}" | grep -q "tegra";
+    then
+      echo "PROJETO DE TEGRA NA DA PRA USAR O BUILD AINDA!"
+      exit 0
+    fi
+
+    if [[ -z "${TRIGGERS[@]}" ]]; then
+      for TRIGGER_NAME in $(gcloud builds triggers list --region="$REGION" --project "${PROJECT_ID}" --format="value(name)" | fzf --tmux -m);
+      do
+        TRIGGERS+=("${TRIGGER_NAME}")
+      done
+    fi
+
+    for EXECUTE_TRIGGER in "${TRIGGERS[@]}";
+    do
+      echo "${EXECUTE_TRIGGER} --> ${PROJECT_ID}"
+      gcloud builds triggers run "${EXECUTE_TRIGGER}" --branch="${BRANCH}" --project="${PROJECT_ID}" --region="${REGION}" 1>/dev/null
+    done
+
+  done
+
+}
+
+function cloudbuild_publish_new {
 
   REGION="us-central1"
   TRIGGERS=()
