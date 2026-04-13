@@ -57,12 +57,13 @@ function cloudbuild_republish {
   for PROJECT_ID in $(gcloud projects list --format="value(projectId)" | fzf --tmux -m);
   do
 
-    if  echo "${PROJECT_ID}" | grep -q "tegra";
+    REGION="us-central1"
+    if  echo "${PROJECT_ID}" | grep -q "tegrainc";
     then
-      echo "PROJETO DE TEGRA NA DA PRA USAR O BUILD AINDA!"
-      exit 0
+        REGION="southamerica-east1"
     fi
 
+    echo "${REGION}"
     if [[ -z "${TRIGGERS[@]}" ]]; then
       for TRIGGER_NAME in $(gcloud builds triggers list --region="$REGION" --project "${PROJECT_ID}" --format="value(name)" | fzf --tmux -m);
       do
