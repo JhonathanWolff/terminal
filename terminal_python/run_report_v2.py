@@ -207,6 +207,10 @@ def get_multi_fzf(text):
         sys.stdout.write("Entrada invalida :(")
         exit(1)
 
+    if "all" in result:
+        return ["all"]
+
+
     return result.split("\n")
 
 
