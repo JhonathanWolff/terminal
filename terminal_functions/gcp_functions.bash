@@ -223,7 +223,7 @@ function iam_add {
     do
         IS_SA="n"
 
-        if echo "${USER_EMAIL}" | grep -qE "wppmediaservices|cherry|fbiz";
+        if echo "${USER_EMAIL}" | grep -qE "wppmediaservices|cherry|fbiz|wppmedia";
         then
           echo "$USER_EMAIL is a user"
         else;

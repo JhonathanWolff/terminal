@@ -119,27 +119,6 @@ function github_clone {
 
 }
 
-function send_files_to_docker {
-
-  docker_image=$(docker ps --format "{{.Names}}" | fzf)
-  docker_path=$(docker exec megalistav2-dataflow-megalistav2-1  find / -type d -not -path "__pycache__" -depth -maxdepth 1 | fzf --tmux --prompt="Path no docker destino>")
-
-  for file_name in $(fdfind . -t f | fzf --tmux -m --prompt="Selecione os arquivos>");
-  do
-    docker_fname=$( echo "${file_name}" | rev | cut -d "/" -f 1 | rev)
-    docker cp "${file_name}" "${docker_image}:${docker_path}/${docker_fname}"
-  done
-
-}
-
-function send_current_directory_to_docker {
-
-  docker_image=$(docker ps --format "{{.Names}}" | fzf)
-  docker_path=$(docker exec megalistav2-dataflow-megalistav2-1  find / -type d -not -path "__pycache__" -depth -maxdepth 1 | fzf --tmux --prompt="Path no docker destino>")
-  docker cp ${$(pwd)} "${docker_image}:${docker_path}"
-
-}
-
 
 function ts {
 
@@ -167,11 +146,6 @@ function ta {
 }
 
 
-
-function fjq {
-  echo "" | fzf --tmux 90% --phony --print-query  --preview "jq --color-output  {q} < $1 " --preview-window='up:95%'
-}
-
 function git_diff {
   git log --oneline --all --pretty=format:"%h" | fzf --tmux 90%  --preview "git diff --color=always {}" --preview-window='up:95%'  --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down
 }
@@ -190,6 +164,9 @@ function crl_to_lf {
     fd . -t f | xargs dos2unix
 }
 
+function count_word {
+    tr -s '[:space:]' '\n' < "$1" | sort | uniq -c | sort -nr
+}
 
 #call work_time_to_create env
 work_time
