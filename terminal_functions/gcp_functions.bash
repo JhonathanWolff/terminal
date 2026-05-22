@@ -374,6 +374,36 @@ function kms_encrypt {
 
 }
 
+
+function firestore_send_document {
+  work_time
+  current_dir=$(pwd)
+
+  FNAME=$(fzf --tmux)
+  FNAME="$(pwd)/${FNAME}"
+  PROJECT=$(gcloud projects list --format="value(projectId)" | fzf --tmux)
+
+  cd $HOME/terminal/terminal_python/firestore_script
+  result=$(python3 send_document.py $1 --project="${PROJECT}" --file="${FNAME}")
+
+  last_execution=$?
+
+  if [[ $last_execution -eq 0 && $(echo $result) =~ "\{" ]]; then
+      echo $result | jq
+  else
+
+    echo $result
+
+  fi;
+
+  cd $current_dir
+
+
+
+}
+
+
+
 function firestore_get_document {
   work_time
   current_dir=$(pwd)

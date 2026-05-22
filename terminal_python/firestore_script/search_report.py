@@ -2,8 +2,21 @@ import sys
 from google.cloud import firestore
 from concurrent.futures import ThreadPoolExecutor,as_completed
 
+
+def __thread_account_level(db:firestore.Client,path:str):
+
+    reports = []
+    for account_report in db.collection(f"{path}").stream():
+        reports.append(account_report.id)
+
+    return reports
+
+
+
 def check_account_level(db:firestore.Client,client_name:str,endpoint_name:str):
 
+    pool = ThreadPoolExecutor(10)
+    jobs = []
     reports = []
     for configs in db.document(f"clients/{client_name}/endpoints/{endpoint_name}").collections():
 
@@ -11,9 +24,16 @@ def check_account_level(db:firestore.Client,client_name:str,endpoint_name:str):
             continue
 
         for account_id in db.collection(f"clients/{client_name}/endpoints/{endpoint_name}/{configs.id}").stream():
-            for account_report in db.collection(f"clients/{client_name}/endpoints/{endpoint_name}/{configs.id}/{account_id.id}/reports").stream():
-                reports.append(account_report.id)
+            pool.submit(
+                    __thread_account_level,
+                    db,
+                    f"clients/{client_name}/endpoints/{endpoint_name}/{configs.id}/{account_id.id}/reports"
+                    )
+            # for account_report in db.collection(f"clients/{client_name}/endpoints/{endpoint_name}/{configs.id}/{account_id.id}/reports").stream():
+            #     reports.append(account_report.id)
 
+    for job in jobs:
+        reports+= job.result()
 
     return list(set(reports))
 
@@ -57,7 +77,7 @@ if __name__ == "__main__":
     db = firestore.Client(project_id)
 
 
-    pool = ThreadPoolExecutor(5)
+    pool = ThreadPoolExecutor(10)
     futures = []
 
     futures.append(
