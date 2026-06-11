@@ -113,7 +113,7 @@ function give_owner_to_work {
 
 function github_clone {
 
-  repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | contains("wms-")) | .name' | fzf --tmux 90% )
+  repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | test("wms|wppmedia-")) | .name' | fzf --tmux 90% )
   git clone git@github.com:VMLYR/$repository_name.git
   cd "${repository_name}"
 
