@@ -21,7 +21,7 @@ def get_document(path, project_id, decript=False):
     from magrathea.gcloud.sdks.kms import CloudKMS
 
     kms = CloudKMS(project_id=project_id,
-            location_id="us-central1",
+            location_id="us-central1" if project_id != "tegrainc-magrathea-execution" else "southamerica-east1",
             key_ring_id="symmetric_ring",
             key_id=project_id
 

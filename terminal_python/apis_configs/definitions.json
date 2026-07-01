@@ -1,5 +1,9 @@
 {
 
+    "fbleadads":{
+        "resource":"leadgen_forms",
+        "collection_id":"pages"
+    },
     "kwaiads": {
         "resource": "get_data",
         "collection_id" : "accounts"

@@ -93,7 +93,7 @@ def do_request(project,function,user_name):
 
 
 def get_fzf(text):
-    result = (subprocess.Popen(f'echo "{text}" | fzf', shell=True, stdout=subprocess.PIPE).
+    result = (subprocess.Popen(f'echo "{text}" | fzf --tmux', shell=True, stdout=subprocess.PIPE).
               stdout.read().decode("utf8").replace("\n", "").strip())
 
     if result == None or result == "":
