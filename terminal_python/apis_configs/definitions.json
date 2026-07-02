@@ -1,7 +1,7 @@
 {
 
     "fbleadads":{
-        "resource":"leadgen_forms",
+        "resource":"get_leadgenforms",
         "collection_id":"pages"
     },
     "kwaiads": {
