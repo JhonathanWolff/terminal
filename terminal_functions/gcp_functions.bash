@@ -318,11 +318,11 @@ function gcp_auth {
   if [[ "$#" != "0" ]]; then
 
       gcloud auth login --project $1 --no-launch-browser
-      gcloud auth application-default login --project $1 --no-launch-browser --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/cloud-platform"
+      gcloud auth application-default login --project $1 #--no-launch-browser --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/cloud-platform"
 
   else
       gcloud auth login
-      gcloud auth application-default login --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/cloud-platform"
+      gcloud auth application-default login #--scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/cloud-platform"
   fi
 
   clear
