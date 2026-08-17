@@ -4,6 +4,10 @@
         "resource":"get_leadgenforms",
         "collection_id":"pages"
     },
+    "groovinads":{
+        "resource":"get_data",
+        "collection_id":"accounts"
+    },
     "kwaiads": {
         "resource": "get_data",
         "collection_id" : "accounts"
@@ -197,7 +201,7 @@
         "collection_id": "pages"
     },
     "rtbhouse": {
-        "resource": "get_report",
+        "resource": "get_data",
         "collection_id": "accounts"
     },
     "searchconsole": {

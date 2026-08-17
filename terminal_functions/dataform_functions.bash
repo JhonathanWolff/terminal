@@ -17,6 +17,22 @@ function dt_log {
 
 }
 
+function dt_querys {
+    dataform compile --json > compiled.json
+    mkdir -p compiled
+
+    while IFS= read -r -d '' TABLE && IFS= read -r -d '' QUERY; do
+
+        [[ -z "$TABLE" ]] && continue
+        echo "${TABLE}"
+
+        echo "${QUERY}" > "./compiled/${TABLE}.sql"
+
+    done < <(jq -j '.tables[] | (.target.name, "\u0000", .query, "\u0000")' compiled.json 2>/dev/null)
+
+    rm compiled.json
+}
+
 
 function dt_init {
 
