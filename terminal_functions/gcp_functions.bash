@@ -166,8 +166,17 @@ function gcp_curl_post {
 
 }
 
+function gcp_impersonate {
 
-function gcp_sa_impersonate {
+        for PROJECT in $(gcloud projects list --format="value(projectId)" | fzf --tmux );
+        do
+            SA=$(gcloud iam service-accounts list --project="${PROJECT}" --format="value(email)" | fzf --tmux)
+            gcloud auth application-default login --impersonate-service-account="${SA}"
+        done
+}
+
+
+function gcp_sa_sheets_credentials {
   FILE=$1
   CURRENT_DIR=$(pwd)
   gcloud auth revoke
