@@ -86,6 +86,13 @@ function cloudbuild_publish_new {
   REGION="us-central1"
   TRIGGERS=()
 
+  BRANCH="main"
+  if [ ! "$#" -eq 0 ];
+  then
+      BRANCH="$1"
+  fi
+  echo "Publishing on branch ${BRANCH}"
+
   for PROJECT_ID in $(gcloud projects list --format="value(projectId)" | fzf --tmux -m);
   do
 
