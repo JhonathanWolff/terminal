@@ -232,6 +232,10 @@
         "resource": "get_report",
         "collection_id": "accounts"
     },
+    "tiktokadsgmv": {
+        "resource": "orchestration",
+        "collection_id": "accounts"
+    },
     "twitterads": {
         "resource": "orchestration",
         "collection_id": "accounts"
