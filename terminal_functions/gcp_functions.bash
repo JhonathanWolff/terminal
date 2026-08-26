@@ -112,7 +112,7 @@ function cloudbuild_publish_new {
     for EXECUTE_TRIGGER in "${TRIGGERS[@]}";
     do
       echo "${EXECUTE_TRIGGER} --> ${PROJECT_ID}"
-      gcloud builds triggers run "${EXECUTE_TRIGGER}" --branch=main --project="${PROJECT_ID}" --region="${REGION}" --substitutions="_FORCE_BUILD=true" --branch=main 1>/dev/null
+      gcloud builds triggers run "${EXECUTE_TRIGGER}" --branch=main --project="${PROJECT_ID}" --region="${REGION}" --substitutions="_FORCE_BUILD=true" --branch="${BRANCH}" 1>/dev/null
     done
 
   done
