@@ -555,3 +555,7 @@ function magrathea_tester {
 
 
 
+
+function firestore_clone_tree {
+  python3 $HOME/terminal/terminal_python/firestore_script/clone_tree.py "$@"
+}
