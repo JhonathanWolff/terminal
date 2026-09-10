@@ -6,6 +6,8 @@ alias open_folder='explorer.exe .'
 
 alias spell='cspell --color -c "/home/jwolff/.cspell/cspell.json"'
 
+alias agy_config='vi $HOME/.gemini/antigravity-cli/settings.json'
+
 
 alias fd='fdfind'
 alias lg='lazygit'
