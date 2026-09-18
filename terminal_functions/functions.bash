@@ -93,8 +93,8 @@ function update_terminal {
   cd $TERMINAL
   lazygit
 
-  cd $HOME/.config/nvim
-  lazygit
+  #cd $HOME/.config/nvim
+  #lazygit
 
   # find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
   # git add --all
