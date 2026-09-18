@@ -74,3 +74,17 @@ if [[ ! -f "$_fzf_cache" || $(command -v fzf) -nt "$_fzf_cache" ]]; then
 fi
 source "$_fzf_cache"
 _elapsed "fzf Loaded"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/jwolff/.local/bin:$PATH"
+
+## VIM MODe
+
+export EDITOR=nvim
+
+# 2. Enable standard vi command-line editing mode
+bindkey -v
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^g' edit-command-line

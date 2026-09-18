@@ -149,3 +149,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/jwolff/.local/bin:$PATH"
