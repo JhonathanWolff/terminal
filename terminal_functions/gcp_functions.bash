@@ -112,7 +112,7 @@ function cloudbuild_publish_new {
     for EXECUTE_TRIGGER in "${TRIGGERS[@]}";
     do
       echo "${EXECUTE_TRIGGER} --> ${PROJECT_ID}"
-      gcloud builds triggers run "${EXECUTE_TRIGGER}" --branch=main --project="${PROJECT_ID}" --region="${REGION}" --substitutions="_FORCE_BUILD=true" --branch="${BRANCH}" 1>/dev/null
+      gcloud builds triggers run "${EXECUTE_TRIGGER}" --project="${PROJECT_ID}" --region="${REGION}" --substitutions="_FORCE_BUILD=true" --branch="${BRANCH}" 1>/dev/null
     done
 
   done
@@ -414,6 +414,17 @@ function firestore_send_document {
 
   cd $current_dir
 
+
+
+}
+
+
+function credentials_get_document {
+  work_time
+  current_dir=$(pwd)
+
+  firestore_get_document $@ -d > cred.json
+  echo -e "\ncred.json" >> ".gitignore"
 
 
 }

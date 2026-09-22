@@ -31,3 +31,17 @@ function ts_install_dev()
     }
 EOF
 }
+
+function npm_package() {
+
+    script=$(jq -r '.scripts | to_entries[] | .key + "##" + .value' package.json \
+      | fzf-tmux -p 80%,60% -- \
+            -m \
+            --delimiter="##" \
+            --with-nth=1 \
+            --preview='echo {2}' \
+            --preview-window=right:50% \
+      | awk -F'##' '{print $1}')
+
+    npm run "$script"
+}
