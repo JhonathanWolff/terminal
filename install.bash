@@ -29,6 +29,7 @@ TERMINAL="${HOME}/terminal"
 sudo npm install -g n
 sudo n stable
 sudo npm install tree-sitter-cli -g
+sudo npm install -g @mermaid-js/mermaid-cli -g
 
 
 ## wsl to use chrome or other browser
