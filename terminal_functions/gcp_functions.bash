@@ -440,7 +440,7 @@ function firestore_get_document {
   last_execution=$?
 
   if [[ $last_execution -eq 0 && $(echo $result) =~ "\{" ]]; then
-      echo $result | jq
+      echo $result
   else
 
     echo $result
