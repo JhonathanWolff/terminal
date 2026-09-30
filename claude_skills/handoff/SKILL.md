@@ -1,15 +1,15 @@
 ---
 name: handoff
-description: create or updated HANDOFF.md for the next agent or a clean context
+description: create or updated HANDOFF_YYYYMMDD.md for the next agent or a clean context
 disable-model-invocation: true
 ---
 
-Write or update a handoff document so the next agent, starting with zero context, can continue this work without re-exploring or repeating mistakes.
+Write or update a handoff document with format "HANDOFF_YYYYMMDD.md" so the next agent, starting with zero context, can continue this work without re-exploring or repeating mistakes.
 
 ## Steps
 
 1. Find the project root (`git rev-parse --show-toplevel`, or the current directory if not a git repo).
-2. If `HANDOFF.md` exists there, read it first to understand prior context.
+2. If `HANDOFF_YYYYMMDD.md` exists there, read it first to understand prior context.
 3. Gather the current state: `git status`, `git branch --show-current`, `git log --oneline -5`, and the result of the last test/build run in this session.
 4. Write `HANDOFF.md` using the template below. When updating, **rewrite** it to reflect the current state: remove what is stale or resolved, keep what is still true. It is a snapshot, not a log.
 5. Tell the user the absolute file path so they can start a fresh conversation with just that path.
