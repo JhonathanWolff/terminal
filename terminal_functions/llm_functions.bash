@@ -1,5 +1,5 @@
 
 
 function cclaude {
-    caveman claude
+    caveman claude $@
 }
