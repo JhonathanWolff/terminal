@@ -1,3 +1,4 @@
+#@ Dataform
 
 #: Mostra erros de compilacao do Dataform (fzf projeto/repo) no nvim
 function dt_log {

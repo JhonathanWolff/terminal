@@ -1,3 +1,4 @@
+#@ GCP
 #This file contains all the functions that are used to interact with GCP and magrathea enviroment
 
 GCP_REGIONS=(

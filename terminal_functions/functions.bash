@@ -1,3 +1,4 @@
+#@ Tools
 
 #: Roda container efemero de uma imagem com bash
 function docker_run_rm_terminal {
@@ -134,10 +135,17 @@ function count_word {
 #call work_time_to_create env
 work_time
 
-#: Lista todas as funcoes deste diretorio com descricao (docstring "#:" acima da funcao)
+#: Lista funcoes com descricao; filtra por secao: help [dataform|gcp|git|tools]
 function help {
-  awk '
-    /^#: /      { desc = substr($0, 4); next }
-    /^function / { name = $2; sub(/\(.*/, "", name); if (desc != "") printf "\033[1;36m%-28s\033[0m %s\n", name, desc; desc = "" }
-  ' "$HOME/terminal/terminal_functions"/*.bash | sort
+  awk -v f="$(printf '%s' "$1" | tr 'A-Z' 'a-z')" '
+    FNR==1 { sec = "Tools"; desc = "" }
+    /^#@ /  { sec = substr($0, 4); next }
+    /^#: /  { desc = substr($0, 4); next }
+    /^function / {
+      name = $2; sub(/\(.*/, "", name)
+      if (desc != "" && (f == "" || tolower(sec) == f)) print sec "\t" name "\t" desc
+      desc = ""
+    }
+  ' "$HOME/terminal/terminal_functions"/*.bash | sort -t$'\t' -k1,1 -k2,2 |
+  awk -F'\t' '$1 != s { s = $1; printf "\n\033[1;33m# %s\033[0m\n", s } { printf "  \033[1;36m%-28s\033[0m %s\n", $2, $3 }'
 }
