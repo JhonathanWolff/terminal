@@ -1,9 +1,9 @@
 #@ JavaScript
 
 
-#: Instala dev deps node
-#: Uso: node_install_dev
-#: Se existir package.json: npm install -D @types/node e js-yaml.
+#: Install node dev dependencies
+#: Usage: node_install_dev
+#: If package.json exists: npm install -D @types/node and js-yaml.
 function node_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -12,10 +12,10 @@ function node_install_dev()
     fi
 }
 
-#: Prepara projeto TypeScript
-#: Uso: ts_install_dev
-#: Se existir package.json instala @types/node (dev) e cria tsconfig.json
-#: (ES2020, commonjs, strict, outDir ./dist, include src). Sobrescreve tsconfig.json existente.
+#: Set up a TypeScript project
+#: Usage: ts_install_dev
+#: If package.json exists, installs @types/node (dev) and creates tsconfig.json
+#: (ES2020, commonjs, strict, outDir ./dist, include src). Overwrites an existing tsconfig.json.
 function ts_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -40,9 +40,9 @@ function ts_install_dev()
 EOF
 }
 
-#: Roda um script do package.json escolhido
-#: Uso: npm_package
-#: Lista os scripts (fzf; o preview mostra o comando) e executa npm run <script>.
+#: Run a chosen package.json script
+#: Usage: npm_package
+#: Lists the scripts (fzf; the preview shows the command) and runs npm run <script>.
 function npm_package() {
 
     script=$(jq -r '.scripts | to_entries[] | .key + "##" + .value' package.json \
@@ -57,9 +57,9 @@ function npm_package() {
     npm run "$script"
 }
 
-#: Servidor com live reload
-#: Uso: live_server
-#: Executa reload -b no diretorio atual. Requer: sudo npm i reload -g.
+#: Live reload server
+#: Usage: live_server
+#: Runs reload -b in the current directory. Requires: sudo npm i reload -g.
 function live_server {
     #sudo npm i reload -g
     reload -b

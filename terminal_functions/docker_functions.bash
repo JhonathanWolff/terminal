@@ -1,16 +1,16 @@
 #@ Docker
 
-#: Roda container efemero de uma imagem com bash
-#: Uso: docker_run_rm_terminal <imagem>
-#:   <imagem>  obrigatorio. Imagem docker (ex: python:3.12)
-#: Executa: docker run --rm -it --entrypoint bash <imagem>. Container removido ao sair.
+#: Run a throwaway container from an image with bash
+#: Usage: docker_run_rm_terminal <image>
+#:   <image>  required. Docker image (e.g. python:3.12)
+#: Runs: docker run --rm -it --entrypoint bash <image>. Container is removed on exit.
 function docker_run_rm_terminal {
   docker run --rm -it --entrypoint bash $1
 }
 
-#: Abre bash em um container em execucao
-#: Uso: dcc
-#: Lista os containers rodando (fzf) e executa docker exec -it <container> bash.
+#: Open bash in a running container
+#: Usage: dcc
+#: Lists running containers (fzf) and runs docker exec -it <container> bash.
 function dcc {
 
     container_name=$(docker ps --format '{{ .Names }}' | fzf --tmux 90%)

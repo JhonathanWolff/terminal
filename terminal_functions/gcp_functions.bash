@@ -47,11 +47,11 @@ GCP_REGIONS=(
   )
 
 
-#: Dispara triggers do Cloud Build em varios projetos
-#: Uso: cloudbuild_republish [branch]
-#:   [branch]  opcional, padrao main.
-#: Escolhe projetos (fzf multi) e, no primeiro, os triggers; roda os mesmos triggers em cada projeto.
-#: Regiao us-central1 (southamerica-east1 para projetos tegrainc).
+#: Run Cloud Build triggers across projects
+#: Usage: cloudbuild_republish [branch]
+#:   [branch]  optional, default main.
+#: Picks projects (fzf multi) and, on the first one, the triggers; runs the same triggers in every project.
+#: Region us-central1 (southamerica-east1 for tegrainc projects).
 function cloudbuild_republish {
 
   REGION="us-central1"
@@ -91,10 +91,10 @@ function cloudbuild_republish {
 
 }
 
-#: Dispara triggers do Cloud Build com _FORCE_BUILD=true
-#: Uso: cloudbuild_publish_new [branch]
-#:   [branch]  opcional, padrao main.
-#: Como cloudbuild_republish, mas passa --substitutions=_FORCE_BUILD=true. Nao funciona para projetos tegra.
+#: Run Cloud Build triggers with _FORCE_BUILD=true
+#: Usage: cloudbuild_publish_new [branch]
+#:   [branch]  optional, default main.
+#: Like cloudbuild_republish, but passes --substitutions=_FORCE_BUILD=true. Does not work for tegra projects.
 function cloudbuild_publish_new {
 
   REGION="us-central1"
@@ -135,12 +135,12 @@ function cloudbuild_publish_new {
 
 
 
-#: POST autenticado em Cloud Function com payloads salvos
-#: Uso: gcp_curl_post [-n <arquivo>] [-r <regiao>] [-s]
-#:   -n <arquivo>  abre ~/.payloads/<arquivo> no nvim (cria/edita payload)
-#:   -r <regiao>   regiao (padrao us-central1)
-#:   -s            escolhe o body de um Cloud Scheduler job POST (fzf, preview base64->json)
-#: Depois escolhe projeto, funcao (URL) e payloads de ~/.payloads (fzf multi), abre cada um no nvim e faz o POST com identity token.
+#: Authenticated POST to a Cloud Function with saved payloads
+#: Usage: gcp_curl_post [-n <file>] [-r <region>] [-s]
+#:   -n <file>    opens ~/.payloads/<file> in nvim (create/edit a payload)
+#:   -r <region>  region (default us-central1)
+#:   -s           picks the body of a Cloud Scheduler POST job (fzf, preview decodes base64 to json)
+#: Then picks project, function (URL) and payloads from ~/.payloads (fzf multi), opens each in nvim and POSTs with an identity token.
 function gcp_curl_post {
 
     REGION="us-central1"
@@ -193,9 +193,9 @@ function gcp_curl_post {
 
 }
 
-#: Login ADC impersonando service account
-#: Uso: gcp_impersonate
-#: Escolhe projeto(s) e service account (fzf) e roda gcloud auth application-default login --impersonate-service-account.
+#: ADC login impersonating a service account
+#: Usage: gcp_impersonate
+#: Picks project(s) and service account (fzf) and runs gcloud auth application-default login --impersonate-service-account.
 function gcp_impersonate {
 
         for PROJECT in $(gcloud projects list --format="value(projectId)" | fzf --tmux );
@@ -206,10 +206,10 @@ function gcp_impersonate {
 }
 
 
-#: Ativa service account a partir de JSON de chave
-#: Uso: gcp_sa_sheets_credentials <arquivo.json>
-#:   <arquivo.json>  obrigatorio. Chave da SA, relativo ao diretorio atual.
-#: Revoga auth e ADC atuais e ativa a SA (client_email do JSON).
+#: Activate a service account from a key JSON
+#: Usage: gcp_sa_sheets_credentials <file.json>
+#:   <file.json>  required. SA key, relative to the current directory.
+#: Revokes current auth and ADC and activates the SA (client_email from the JSON).
 function gcp_sa_sheets_credentials {
   FILE=$1
   CURRENT_DIR=$(pwd)
@@ -218,10 +218,10 @@ function gcp_sa_sheets_credentials {
   gcloud auth activate-service-account  $( cat "${CURRENT_DIR}/${FILE}" | jq -r '.client_email' ) --key-file="${CURRENT_DIR}/${FILE}"
 }
 
-#: Adiciona roles IAM a usuarios/SAs em varios projetos
-#: Uso: iam_add [-u]
-#:   -u  limpa e recria o cache de roles (gcp_roles.json)
-#: Escolhe projetos e roles (fzf multi), pergunta os usuarios e se sao service accounts.
+#: Add IAM roles to users/SAs across projects
+#: Usage: iam_add [-u]
+#:   -u  clears and rebuilds the roles cache (gcp_roles.json)
+#: Picks projects and roles (fzf multi), asks for the users and whether they are service accounts.
 function iam_add {
 
     if [ $# -eq 0 ];
@@ -310,9 +310,9 @@ function iam_add {
 }
 
 
-#: Decodifica URL de relatorio AppsFlyer
-#: Uso: appsflyer_url "<url>"
-#:   "<url>"  obrigatorio, entre aspas duplas (por causa do &). -h mostra ajuda do script.
+#: Decode an AppsFlyer report URL
+#: Usage: appsflyer_url "<url>"
+#:   "<url>"  required, in double quotes (because of &). -h shows the script help.
 function appsflyer_url {
 
 
@@ -333,18 +333,18 @@ function appsflyer_url {
 }
 
 
-#: SSH em VM do Compute Engine
-#: Uso: gce_connect
-#: Escolhe projeto e instancia RUNNING (fzf) e roda gcloud compute ssh.
+#: SSH into a Compute Engine VM
+#: Usage: gce_connect
+#: Picks project and RUNNING instance (fzf) and runs gcloud compute ssh.
 function gce_connect {
 
     project=$(gcloud projects list --format="value(projectId)" | fzf --tmux 90%)
     gcloud compute ssh $(gcloud compute instances list  --project=$project --filter="status:RUNNING" --format="value(name)" | fzf --tmux 90%) --project $project
 }
 
-#: Lista collection ids das Cloud Functions
-#: Uso: cloudfunction_collectionids
-#: Escolhe o projeto (fzf, exclui datarepository) e roda list_collectionid.py.
+#: List Cloud Function collection ids
+#: Usage: cloudfunction_collectionids
+#: Picks the project (fzf, excludes datarepository) and runs list_collectionid.py.
 function cloudfunction_collectionids {
 
 
@@ -367,10 +367,10 @@ function cloudfunction_collectionids {
 }
 
 
-#: Refaz login no gcloud e no ADC
-#: Uso: gcp_auth [projeto]
-#:   [projeto]  opcional. Se passado, faz gcloud auth login e application-default login nesse projeto (--no-launch-browser no 1o).
-#: Sempre revoga todas as credenciais antes.
+#: Redo gcloud and ADC login
+#: Usage: gcp_auth [project]
+#:   [project]  optional. If given, runs gcloud auth login and application-default login for that project (--no-launch-browser on the first).
+#: Always revokes all credentials first.
 function gcp_auth {
 
   gcloud auth revoke --all
@@ -391,9 +391,9 @@ function gcp_auth {
 }
 
 
-#: Troca projeto do gcloud e quota project do ADC
-#: Uso: gcp_change_project <projeto>
-#:   <projeto>  obrigatorio. Limpa a tela ao final.
+#: Switch the gcloud project and the ADC quota project
+#: Usage: gcp_change_project <project>
+#:   <project>  required. Clears the screen at the end.
 function gcp_change_project {
   gcloud config set project $1 --quiet 2>/dev/null
   gcloud auth application-default set-quota-project $1 --quiet 2>/dev/null
@@ -402,10 +402,10 @@ function gcp_change_project {
 }
 
 
-#: Decripta arquivo com KMS
-#: Uso: kms_decrypt <arquivo> --project=<PROJECT_ID> [-r]
-#:   -r  substitui o conteudo do arquivo original
-#:   -h  ajuda do script (decrypt.py)
+#: Decrypt a file with KMS
+#: Usage: kms_decrypt <file> --project=<PROJECT_ID> [-r]
+#:   -r  replace the content of the original file
+#:   -h  script help (decrypt.py)
 function kms_decrypt {
   work_time
   current_dir=$(pwd)
@@ -424,10 +424,10 @@ function kms_decrypt {
 }
 
 
-#: Encripta arquivo com KMS
-#: Uso: kms_encrypt <arquivo> --project=<PROJECT_ID> [-r]
-#:   -r  substitui o conteudo do arquivo original
-#:   -h  ajuda do script (encrypt.py)
+#: Encrypt a file with KMS
+#: Usage: kms_encrypt <file> --project=<PROJECT_ID> [-r]
+#:   -r  replace the content of the original file
+#:   -h  script help (encrypt.py)
 function kms_encrypt {
   work_time
   current_dir=$(pwd)
@@ -446,10 +446,10 @@ function kms_encrypt {
 }
 
 
-#: Envia arquivo JSON como documento Firestore
-#: Uso: firestore_send_document <path_firestore>
-#:   <path_firestore>  obrigatorio. Ex: colecao/documento
-#: Escolhe o arquivo (fzf, relativo ao diretorio atual) e o projeto (fzf) e roda send_document.py.
+#: Send a JSON file as a Firestore document
+#: Usage: firestore_send_document <firestore_path>
+#:   <firestore_path>  required. E.g. collection/document
+#: Picks the file (fzf, relative to the current directory) and the project (fzf) and runs send_document.py.
 function firestore_send_document {
   work_time
   current_dir=$(pwd)
@@ -478,9 +478,9 @@ function firestore_send_document {
 }
 
 
-#: Baixa documento Firestore decriptado em cred.json
-#: Uso: credentials_get_document <path_firestore> --project=<PROJECT_ID>
-#: Roda firestore_get_document com -d, grava em cred.json e adiciona cred.json ao .gitignore.
+#: Download a decrypted Firestore document into cred.json
+#: Usage: credentials_get_document <firestore_path> --project=<PROJECT_ID>
+#: Runs firestore_get_document with -d, writes cred.json and adds cred.json to .gitignore.
 function credentials_get_document {
   work_time
   current_dir=$(pwd)
@@ -493,10 +493,10 @@ function credentials_get_document {
 
 
 
-#: Le documento do Firestore
-#: Uso: firestore_get_document <path_firestore> --project=<PROJECT_ID> [-d]
-#:   -d  decripta o conteudo
-#:   -h  ajuda do script (getDocument.py)
+#: Read a Firestore document
+#: Usage: firestore_get_document <firestore_path> --project=<PROJECT_ID> [-d]
+#:   -d  decrypt the content
+#:   -h  script help (getDocument.py)
 function firestore_get_document {
   work_time
   current_dir=$(pwd)
@@ -519,10 +519,10 @@ function firestore_get_document {
 
 }
 
-#: Dispara relatorios Magrathea via Pub/Sub
-#: Uso: run_report_v2 [projeto]
-#:   [projeto]  opcional. Sem ele, escolhe projetos (fzf multi, exclui datarepository).
-#: Para cada projeto escolhe cliente/API/reports (fzf) e publica no topico magrathea-queue-manager.
+#: Trigger Magrathea reports via Pub/Sub
+#: Usage: run_report_v2 [project]
+#:   [project]  optional. Without it, picks projects (fzf multi, excludes datarepository).
+#: For each project picks client/API/reports (fzf) and publishes to the magrathea-queue-manager topic.
 function run_report_v2 {
 
   current_dir=$(pwd)
@@ -568,10 +568,10 @@ function run_report_v2 {
 
 
 
-#: Dispara relatorio Magrathea via run_report.py
-#: Uso: run_report [projeto]
-#:   [projeto]  opcional. Sem ele, escolhe o projeto (fzf, exclui datarepository).
-#: Gera report_tmp.json e publica no topico magrathea-queue-manager.
+#: Trigger a Magrathea report via run_report.py
+#: Usage: run_report [project]
+#:   [project]  optional. Without it, picks the project (fzf, excludes datarepository).
+#: Generates report_tmp.json and publishes to the magrathea-queue-manager topic.
 function run_report {
   work_time
   current_dir=$(pwd)
@@ -609,9 +609,9 @@ function run_report {
 
 
 
-#: Exporta env vars de uma Cloud Function
-#: Uso: gcp_function_copy_envs
-#: Escolhe projeto, funcao e regiao (fzf) e grava as variaveis em gcp_env.json no diretorio atual.
+#: Export the env vars of a Cloud Function
+#: Usage: gcp_function_copy_envs
+#: Picks project, function and region (fzf) and writes the variables to gcp_env.json in the current directory.
 function gcp_function_copy_envs {
 
   project_id=$(gcloud projects list --format="value(projectId)" | fzf --tmux );
@@ -636,9 +636,9 @@ if "LOCAL_EMULATION" in os.environ:
 
 }
 
-#: Container do magrathea_package_tester
-#: Uso: magrathea_tester
-#: Configura docker para o Artifact Registry e roda a imagem magrathea_package_tester com o diretorio atual montado em /app.
+#: magrathea_package_tester container
+#: Usage: magrathea_tester
+#: Configures docker for Artifact Registry and runs the magrathea_package_tester image with the current directory mounted at /app.
 function magrathea_tester {
     gcloud auth configure-docker us-central1-docker.pkg.dev &>/dev/null
     docker run -v .:/app -it --rm "us-central1-docker.pkg.dev/hitchhikers-magrathea/magrathea-cicd/magrathea_package_tester:latest" /bin/bash
@@ -647,10 +647,10 @@ function magrathea_tester {
 
 
 
-#: Clona uma arvore do Firestore
-#: Uso: firestore_clone_tree --project=<PROJECT_ID> --path=<path> [--database=<db>]
-#:   --database  opcional, padrao (default)
-#:   -h          ajuda do script (clone_tree.py)
+#: Clone a Firestore tree
+#: Usage: firestore_clone_tree --project=<PROJECT_ID> --path=<path> [--database=<db>]
+#:   --database  optional, default (default)
+#:   -h          script help (clone_tree.py)
 function firestore_clone_tree {
   python3 $HOME/terminal/terminal_python/firestore_script/clone_tree.py "$@"
 }

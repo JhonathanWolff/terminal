@@ -1,9 +1,9 @@
 #@ Tools
 
-#: Cria/ativa a venv de trabalho
-#: Uso: work_time
-#: Cria ~/work/work_envs/work_env se nao existir e ativa se nenhuma venv estiver ativa.
-#: Tambem roda automaticamente ao carregar functions.bash.
+#: Create/activate the work venv
+#: Usage: work_time
+#: Creates ~/work/work_envs/work_env if missing and activates it when no venv is active.
+#: Also runs automatically when functions.bash is loaded.
 function work_time {
 
     if [[ ! -d "$HOME/work/work_envs" ]];then
@@ -21,10 +21,10 @@ function work_time {
 
 }
 
-#: Copia configs para o repo do terminal e abre lazygit
-#: Uso: update_terminal
-#: Copia .zshrc, .bashrc, .tmux.conf, nvim, starship, requirements.txt e lazygit para $TERMINAL (usa sudo)
-#: e abre o lazygit nele. Volta ao diretorio de origem ao sair.
+#: Copy configs to the terminal repo and open lazygit
+#: Usage: update_terminal
+#: Copies .zshrc, .bashrc, .tmux.conf, nvim, starship, requirements.txt and lazygit config to $TERMINAL (uses sudo)
+#: and opens lazygit there. Returns to the original directory on exit.
 function update_terminal {
 
   current_dir=$(pwd)
@@ -51,24 +51,24 @@ function update_terminal {
 
 }
 
-#: chown de ~/work para o usuario atual
-#: Uso: give_owner_to_work
-#: Executa sudo chown -R $USER ~/work.
+#: chown ~/work to the current user
+#: Usage: give_owner_to_work
+#: Runs sudo chown -R $USER ~/work.
 function give_owner_to_work {
   sudo chown -R $USER ~/work
 
 }
 
-#: Consulta cheat.sh
-#: Uso: cheat <comando>
-#:   <comando>  obrigatorio. Ex: cheat tar
+#: Query cheat.sh
+#: Usage: cheat <command>
+#:   <command>  required. E.g. cheat tar
 function cheat {
     curl cheat.sh/$1
 }
 
-#: Lista funcoes dos .bash do diretorio atual
-#: Uso: find_methods
-#: Busca recursiva por 'function nome' nos arquivos .bash a partir do diretorio atual.
+#: List functions defined in .bash files of the current directory
+#: Usage: find_methods
+#: Recursively searches 'function name' in .bash files from the current directory.
 function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
@@ -76,15 +76,20 @@ function find_methods {
 #call work_time_to_create env
 work_time
 
-#: Documentacao das funcoes
-#: Uso: help                    lista tudo, agrupado por secao
-#:      help <secao>            lista so a secao (dataform, gcp, git, docker, tmux, tools...)
-#:      help <funcao>           documentacao detalhada da funcao
-#:      help <secao> <funcao>   idem, restringindo a secao
-#: Docstring: linhas '#:' acima de 'function nome' (1a linha = resumo; demais = detalhe).
-#: Secao: linha '#@ Nome' no topo do arquivo; sem ela cai em Tools.
+#: Function documentation
+#: Usage: help                    list everything, grouped by section
+#:        help <section>          list one section (dataform, gcp, git, docker, tmux, tools...)
+#:        help <function>         detailed documentation of the function
+#:        help <section> <function>  same, restricted to the section
+#: Pipe:  help | rg avro | help   show the detailed docs of every filtered function
+#: Docstring: '#:' lines above 'function name' (first line = summary; the rest = details).
+#: Section: '#@ Name' line at the top of the file; without it the file falls into Tools.
 function help {
-  local a1 a2
+  local a1 a2 n
+  if [[ $# -eq 0 && -p /dev/stdin ]]; then
+    for n in $(sed 's/\x1b\[[0-9;]*m//g' | awk '/^  [A-Za-z_]/ {print $1}'); do help "$n"; echo; done
+    return
+  fi
   a1=$(printf '%s' "$1" | tr 'A-Z' 'a-z'); a2=$(printf '%s' "$2" | tr 'A-Z' 'a-z')
   awk '
     FNR==1 { sec = "Tools"; doc = "" }
@@ -115,6 +120,6 @@ function help {
       if (a2 != "") { for (i = 1; i <= n; i++) if (tolower(sec[i]) == a1 && name[i] == a2) { detail(i); found = 1 } }
       else if (a1 == "" || isSec) { list(a1); found = 1 }
       else { for (i = 1; i <= n; i++) if (name[i] == a1) { detail(i); found = 1 } }
-      if (!found) print "help: nada encontrado (use help para listar)"
+      if (!found) print "help: nothing found (run help to list)"
     }'
 }

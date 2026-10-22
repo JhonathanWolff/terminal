@@ -1,25 +1,25 @@
 #@ Git
 
 
-#: Git blame de um arquivo escolhido
-#: Uso: gblame
-#: Escolhe o arquivo (fzf) e mostra git blame navegavel em fzf.
+#: Git blame of a chosen file
+#: Usage: gblame
+#: Picks the file (fzf) and shows git blame in a browsable fzf.
 function gblame {
   file_to_blame=$(fd . | fzf --tmux)
   git blame "${file_to_blame}" | fzf
 }
 
-#: Grafo de commits de todas as branches
-#: Uso: glola
-#: git log --graph --decorate, uma linha por commit, todas as branches.
+#: Commit graph of all branches
+#: Usage: glola
+#: git log --graph --decorate, one line per commit, all branches.
 function glola {
   git log --graph --decorate --pretty=oneline --abbrev-commit --all
 }
 
-#: Resumo de saude do repo
-#: Uso: gitinspect
-#: Mostra: autores (shortlog), 20 arquivos mais alterados no ultimo ano, 20 arquivos com commits fix/bug/broken
-#: e commits recentes de revert/hotfix/emergency/rollback.
+#: Repo health summary
+#: Usage: gitinspect
+#: Shows: authors (shortlog), top 20 files changed in the last year, top 20 files with fix/bug/broken commits,
+#: and recent revert/hotfix/emergency/rollback commits.
 function gitinspect {
 
     echo "\n---Repo Maintainers----"
@@ -37,16 +37,16 @@ function gitinspect {
     git log --oneline --since="1 year ago" | grep -iE 'revert|hotfix|emergency|rollback'
 }
 
-#: Navega commits e mostra o diff de cada um
-#: Uso: git_diff
-#: Lista commits de todas as branches (fzf); o preview mostra o git diff do commit selecionado.
+#: Browse commits and show each one's diff
+#: Usage: git_diff
+#: Lists commits from all branches (fzf); the preview shows the git diff of the selected commit.
 function git_diff {
   git log --oneline --all --pretty=format:"%h" | fzf --tmux 90%  --preview "git diff --color=always {}" --preview-window='up:95%'  --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down
 }
 
-#: Clona repo da org VMLYR (wms|wppmedia-) e entra nele
-#: Uso: github_clone
-#: Lista os repos da VMLYR que casam wms ou wppmedia- (fzf), faz git clone via SSH e entra na pasta.
+#: Clone a VMLYR repo (wms|wppmedia-) and cd into it
+#: Usage: github_clone
+#: Lists VMLYR repos matching wms or wppmedia- (fzf), runs git clone over SSH and enters the folder.
 function github_clone {
 
   repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | test("wms|wppmedia-")) | .name' | fzf --tmux 90% )

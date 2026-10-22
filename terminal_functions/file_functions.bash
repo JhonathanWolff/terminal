@@ -1,10 +1,10 @@
 #@ Files
 
 
-#: Imprime registros de um arquivo avro como JSON
-#: Uso: avro_open <arquivo.avro>
-#:   <arquivo.avro>  obrigatorio. Caminho relativo ao diretorio atual.
-#: Um registro JSON por linha. Requer python3 com fastavro.
+#: Print the records of an avro file as JSON
+#: Usage: avro_open <file.avro>
+#:   <file.avro>  required. Path relative to the current directory.
+#: One JSON record per line. Requires python3 with fastavro.
 function avro_open ()
 {
     FILE_PATH="$(pwd)/$1"
@@ -18,16 +18,16 @@ with open('$FILE_PATH', 'rb') as f:
 "
 }
 
-#: Converte CRLF para LF recursivamente
-#: Uso: crl_to_lf
-#: Roda dos2unix em todos os arquivos (fd -t f) a partir do diretorio atual. Altera os arquivos no lugar.
+#: Convert CRLF to LF recursively
+#: Usage: crl_to_lf
+#: Runs dos2unix on every file (fd -t f) from the current directory. Modifies files in place.
 function crl_to_lf {
     fd . -t f | xargs dos2unix
 }
 
-#: Frequencia de palavras de um arquivo
-#: Uso: count_word <arquivo>
-#:   <arquivo>  obrigatorio. Saida: contagem + palavra, da mais para a menos frequente.
+#: Word frequency of a file
+#: Usage: count_word <file>
+#:   <file>  required. Output: count + word, most to least frequent.
 function count_word {
     tr -s '[:space:]' '\n' < "$1" | sort | uniq -c | sort -nr
 }
