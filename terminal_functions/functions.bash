@@ -1,6 +1,9 @@
 #@ Tools
 
-#: Cria/ativa a venv de trabalho (~/work/work_envs)
+#: Cria/ativa a venv de trabalho
+#: Uso: work_time
+#: Cria ~/work/work_envs/work_env se nao existir e ativa se nenhuma venv estiver ativa.
+#: Tambem roda automaticamente ao carregar functions.bash.
 function work_time {
 
     if [[ ! -d "$HOME/work/work_envs" ]];then
@@ -18,7 +21,10 @@ function work_time {
 
 }
 
-#: Copia configs (zsh, bash, tmux, nvim...) para o repo e abre lazygit
+#: Copia configs para o repo do terminal e abre lazygit
+#: Uso: update_terminal
+#: Copia .zshrc, .bashrc, .tmux.conf, nvim, starship, requirements.txt e lazygit para $TERMINAL (usa sudo)
+#: e abre o lazygit nele. Volta ao diretorio de origem ao sair.
 function update_terminal {
 
   current_dir=$(pwd)
@@ -46,17 +52,23 @@ function update_terminal {
 }
 
 #: chown de ~/work para o usuario atual
+#: Uso: give_owner_to_work
+#: Executa sudo chown -R $USER ~/work.
 function give_owner_to_work {
   sudo chown -R $USER ~/work
 
 }
 
-#: Consulta cheat.sh: cheat <comando>
+#: Consulta cheat.sh
+#: Uso: cheat <comando>
+#:   <comando>  obrigatorio. Ex: cheat tar
 function cheat {
     curl cheat.sh/$1
 }
 
-#: Lista as funcoes definidas nos .bash do diretorio atual
+#: Lista funcoes dos .bash do diretorio atual
+#: Uso: find_methods
+#: Busca recursiva por 'function nome' nos arquivos .bash a partir do diretorio atual.
 function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
@@ -64,17 +76,45 @@ function find_methods {
 #call work_time_to_create env
 work_time
 
-#: Lista funcoes com descricao; filtra por secao: help [dataform|gcp|git|tools]
+#: Documentacao das funcoes
+#: Uso: help                    lista tudo, agrupado por secao
+#:      help <secao>            lista so a secao (dataform, gcp, git, docker, tmux, tools...)
+#:      help <funcao>           documentacao detalhada da funcao
+#:      help <secao> <funcao>   idem, restringindo a secao
+#: Docstring: linhas '#:' acima de 'function nome' (1a linha = resumo; demais = detalhe).
+#: Secao: linha '#@ Nome' no topo do arquivo; sem ela cai em Tools.
 function help {
-  awk -v f="$(printf '%s' "$1" | tr 'A-Z' 'a-z')" '
-    FNR==1 { sec = "Tools"; desc = "" }
+  local a1 a2
+  a1=$(printf '%s' "$1" | tr 'A-Z' 'a-z'); a2=$(printf '%s' "$2" | tr 'A-Z' 'a-z')
+  awk '
+    FNR==1 { sec = "Tools"; doc = "" }
     /^#@ /  { sec = substr($0, 4); next }
-    /^#: /  { desc = substr($0, 4); next }
+    /^#:/   { doc = doc (doc == "" ? "" : "\001") substr($0, 4); next }
     /^function / {
       name = $2; sub(/\(.*/, "", name)
-      if (desc != "" && (f == "" || tolower(sec) == f)) print sec "\t" name "\t" desc
-      desc = ""
+      if (doc != "") print sec "\t" name "\t" doc
+      doc = ""
     }
   ' "$HOME/terminal/terminal_functions"/*.bash | sort -t$'\t' -k1,1 -k2,2 |
-  awk -F'\t' '$1 != s { s = $1; printf "\n\033[1;33m# %s\033[0m\n", s } { printf "  \033[1;36m%-28s\033[0m %s\n", $2, $3 }'
+  awk -F'\t' -v a1="$a1" -v a2="$a2" '
+    { n++; sec[n] = $1; name[n] = $2; doc[n] = $3; if (tolower($1) == a1) isSec = 1 }
+    function detail(i,   k, parts, c) {
+      printf "\033[1;36m%s\033[0m \033[2m(%s)\033[0m\n", name[i], sec[i]
+      c = split(doc[i], parts, "\001")
+      for (k = 1; k <= c; k++) print "  " parts[k]
+    }
+    function list(only,   i, s, first) {
+      for (i = 1; i <= n; i++) {
+        if (only != "" && tolower(sec[i]) != only) continue
+        if (sec[i] != s) { s = sec[i]; printf "\n\033[1;33m# %s\033[0m\n", s }
+        split(doc[i], first, "\001")
+        printf "  \033[1;36m%-28s\033[0m %s\n", name[i], first[1]
+      }
+    }
+    END {
+      if (a2 != "") { for (i = 1; i <= n; i++) if (tolower(sec[i]) == a1 && name[i] == a2) { detail(i); found = 1 } }
+      else if (a1 == "" || isSec) { list(a1); found = 1 }
+      else { for (i = 1; i <= n; i++) if (name[i] == a1) { detail(i); found = 1 } }
+      if (!found) print "help: nada encontrado (use help para listar)"
+    }'
 }

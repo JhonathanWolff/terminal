@@ -1,6 +1,8 @@
 #@ WSL
 
-#: Imprime o pwd no formato de caminho Windows (\\wsl.localhost)
+#: pwd no formato de caminho Windows
+#: Uso: wpwd
+#: Imprime \\wsl.localhost\Ubuntu\<pwd> para colar no Explorer.
 function wpwd {
 
     prefix="\\wsl.localhost\Ubuntu"

@@ -1,7 +1,9 @@
 #@ LLM
 
 
-#: Executa claude via caveman: cclaude [args]
+#: Executa claude via caveman
+#: Uso: cclaude [args]
+#:   [args]  opcionais. Repassados para 'caveman claude'.
 function cclaude {
     caveman claude $@
 }

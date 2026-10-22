@@ -1,7 +1,9 @@
 #@ JavaScript
 
 
-#: Instala @types/node e js-yaml como dev deps
+#: Instala dev deps node
+#: Uso: node_install_dev
+#: Se existir package.json: npm install -D @types/node e js-yaml.
 function node_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -10,7 +12,10 @@ function node_install_dev()
     fi
 }
 
-#: Instala @types/node e cria tsconfig.json
+#: Prepara projeto TypeScript
+#: Uso: ts_install_dev
+#: Se existir package.json instala @types/node (dev) e cria tsconfig.json
+#: (ES2020, commonjs, strict, outDir ./dist, include src). Sobrescreve tsconfig.json existente.
 function ts_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -35,7 +40,9 @@ function ts_install_dev()
 EOF
 }
 
-#: Escolhe um script do package.json (fzf) e roda com npm run
+#: Roda um script do package.json escolhido
+#: Uso: npm_package
+#: Lista os scripts (fzf; o preview mostra o comando) e executa npm run <script>.
 function npm_package() {
 
     script=$(jq -r '.scripts | to_entries[] | .key + "##" + .value' package.json \
@@ -50,7 +57,9 @@ function npm_package() {
     npm run "$script"
 }
 
-#: Inicia servidor com live reload (reload -b)
+#: Servidor com live reload
+#: Uso: live_server
+#: Executa reload -b no diretorio atual. Requer: sudo npm i reload -g.
 function live_server {
     #sudo npm i reload -g
     reload -b

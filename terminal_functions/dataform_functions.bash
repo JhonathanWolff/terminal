@@ -1,6 +1,9 @@
 #@ Dataform
 
-#: Mostra erros de compilacao do Dataform (fzf projeto/repo) no nvim
+#: Mostra erros de compilacao do Dataform
+#: Uso: dt_log
+#: Escolhe regiao, projeto e repositorio (fzf), busca via API os compilationResults com erro
+#: e abre o JSON no nvim (arquivo temporario apagado ao fechar).
 function dt_log {
 
     REGION=$(printf "%s\n" "${GCP_REGIONS[@]}" | fzf --tmux 90% --prompt="Region for Project> ")
@@ -19,7 +22,9 @@ function dt_log {
 
 }
 
-#: Compila Dataform e salva cada query em ./compiled/<tabela>.sql
+#: Salva as queries compiladas do Dataform
+#: Uso: dt_querys
+#: Roda dataform compile --json e grava cada tabela em ./compiled/<tabela>.sql.
 function dt_querys {
     dataform compile --json > compiled.json
     mkdir -p compiled
@@ -37,7 +42,10 @@ function dt_querys {
 }
 
 
-#: Inicializa projeto Dataform (npmrc, deps, credenciais)
+#: Inicializa projeto Dataform
+#: Uso: dt_init
+#: Recria node_modules, configura .npmrc (registry @datasync + auth do Artifact Registry), npm i,
+#: dataform init-creds, corrige 'for (idTable in' nos .sqlx e ignora .df-credentials.json no git.
 function dt_init {
 
     rm -rf node_modules/ package-lock.json
@@ -57,7 +65,10 @@ function dt_init {
 
 
 
-#: Configura projeto Dataform (npmrc, deps, credenciais)
+#: Prepara projeto Dataform para teste em schema 'test'
+#: Uso: dt_config
+#: Igual ao setup do dt_init (npmrc, npm i, init-creds), depois roda dt_rename (schema -> test),
+#: pergunta o nome da branch, cria test/<nome>, compila e commita 'Database Rename' se compilar.
 function dt_config {
 
     rm -rf node_modules/ package-lock.json
@@ -90,7 +101,10 @@ function dt_config {
 
 
 
-#: Troca o valor de schema nos arquivos js/sqlx/txt: dt_rename [dir]
+#: Troca o schema dos arquivos Dataform para 'test'
+#: Uso: dt_rename [dir]
+#:   [dir]  opcional, padrao '.'. Altera *.js, *.sqlx e *.txt que tenham bloco config {}:
+#: substitui ou adiciona schema:"test". Altera os arquivos no lugar (sem backup).
 function dt_rename {
 
     DIR="${1:-.}"
@@ -133,7 +147,9 @@ function dt_rename {
 
 }
 
-#: Compila Dataform e salva queries em ./compiled/<projeto.schema.tabela>.sql
+#: Salva as queries compiladas do Dataform (nome completo)
+#: Uso: dtc
+#: Como dt_querys, mas grava em ./compiled/<projeto>.<schema>.<tabela>.sql e adiciona compiled/ ao .gitignore.
 function dtc {
 
     OLD_IFS=$IFS
@@ -161,7 +177,9 @@ function dtc {
 
 }
 
-#: Faz npm link do @datasync/dataform_package
+#: Usa @datasync/dataform_package local via npm link
+#: Uso: dt_link_lib
+#: Faz unlink, remove node_modules/package-lock e roda npm link. Depois remova o pacote do package.json e rode npm i.
 function dt_link_lib {
 
 

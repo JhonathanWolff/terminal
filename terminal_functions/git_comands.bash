@@ -1,18 +1,25 @@
 #@ Git
 
 
-#: Escolhe arquivo (fzf) e mostra git blame
+#: Git blame de um arquivo escolhido
+#: Uso: gblame
+#: Escolhe o arquivo (fzf) e mostra git blame navegavel em fzf.
 function gblame {
   file_to_blame=$(fd . | fzf --tmux)
   git blame "${file_to_blame}" | fzf
 }
 
 #: Grafo de commits de todas as branches
+#: Uso: glola
+#: git log --graph --decorate, uma linha por commit, todas as branches.
 function glola {
   git log --graph --decorate --pretty=oneline --abbrev-commit --all
 }
 
-#: Resumo do repo: autores, arquivos mais alterados, bugs, hotfixes
+#: Resumo de saude do repo
+#: Uso: gitinspect
+#: Mostra: autores (shortlog), 20 arquivos mais alterados no ultimo ano, 20 arquivos com commits fix/bug/broken
+#: e commits recentes de revert/hotfix/emergency/rollback.
 function gitinspect {
 
     echo "\n---Repo Maintainers----"
@@ -30,12 +37,16 @@ function gitinspect {
     git log --oneline --since="1 year ago" | grep -iE 'revert|hotfix|emergency|rollback'
 }
 
-#: Navega commits com fzf e mostra o diff no preview
+#: Navega commits e mostra o diff de cada um
+#: Uso: git_diff
+#: Lista commits de todas as branches (fzf); o preview mostra o git diff do commit selecionado.
 function git_diff {
   git log --oneline --all --pretty=format:"%h" | fzf --tmux 90%  --preview "git diff --color=always {}" --preview-window='up:95%'  --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down
 }
 
-#: Escolhe repo wms/wppmedia da VMLYR (fzf) e clona
+#: Clona repo da org VMLYR (wms|wppmedia-) e entra nele
+#: Uso: github_clone
+#: Lista os repos da VMLYR que casam wms ou wppmedia- (fzf), faz git clone via SSH e entra na pasta.
 function github_clone {
 
   repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | test("wms|wppmedia-")) | .name' | fzf --tmux 90% )
