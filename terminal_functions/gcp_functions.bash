@@ -51,8 +51,12 @@ function cloudbuild_republish {
   REGION="us-central1"
   TRIGGERS=()
 
-  echo "Enter branch Name"
-  read BRANCH
+  BRANCH="main"
+  if [ ! "$#" -eq 0 ];
+  then
+      BRANCH="$1"
+  fi
+  echo "Publishing on branch ${BRANCH}"
 
   for PROJECT_ID in $(gcloud projects list --format="value(projectId)" | fzf --tmux -m);
   do

@@ -47,6 +47,8 @@ function dt_init {
     npm i
     dataform init-creds
     fd .  | grep -E ".sqlx$" | xargs -I {} sed -i 's/for (idTable in groupTables)/for (const idTable in groupTables)/g' {}
+    echo ".df-credentials.json" >> ".gitignore"
+
 }
 
 

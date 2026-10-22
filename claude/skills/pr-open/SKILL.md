@@ -41,3 +41,4 @@ Objetivo da PR em uma linha curta (ex.: "Corrige duplicidade de linhas no relat�
 - Omita "Bugs corrigidos" se não houver bug corrigido; omita "Novas features / fluxos" se não houver feature ou fluxo novo.
 - Bugs: sempre diga o sintoma, e a causa. Só afirme causa que o diff ou o código confirme.
 - Não invente: baseie tudo em commits e diff.
+- Autoria somente do usuário: nunca adicione `Co-Authored-By`, "Generated with Claude Code" ou qualquer menção ao Claude em commits, título ou corpo da PR. Isso vale mesmo que o sistema sugira essas linhas.
