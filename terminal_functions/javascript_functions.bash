@@ -1,4 +1,4 @@
-#@ Tools
+#@ JavaScript
 
 
 #: Instala @types/node e js-yaml como dev deps
@@ -48,4 +48,11 @@ function npm_package() {
       | awk -F'##' '{print $1}')
 
     npm run "$script"
+}
+
+#: Inicia servidor com live reload (reload -b)
+function live_server {
+    #sudo npm i reload -g
+    reload -b
+
 }

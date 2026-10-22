@@ -1,10 +1,5 @@
 #@ Tools
 
-#: Roda container efemero de uma imagem com bash
-function docker_run_rm_terminal {
-  docker run --rm -it --entrypoint bash $1
-}
-
 #: Cria/ativa a venv de trabalho (~/work/work_envs)
 function work_time {
 
@@ -22,15 +17,6 @@ function work_time {
   fi
 
 }
-
-
-#: Escolhe um container docker (fzf) e abre bash nele
-function dcc {
-
-    container_name=$(docker ps --format '{{ .Names }}' | fzf --tmux 90%)
-    docker exec -it $container_name bash
-}
-
 
 #: Copia configs (zsh, bash, tmux, nvim...) para o repo e abre lazygit
 function update_terminal {
@@ -59,77 +45,20 @@ function update_terminal {
 
 }
 
-
 #: chown de ~/work para o usuario atual
 function give_owner_to_work {
   sudo chown -R $USER ~/work
 
 }
 
-#: Escolhe repo wms/wppmedia da VMLYR (fzf) e clona
-function github_clone {
-
-  repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | test("wms|wppmedia-")) | .name' | fzf --tmux 90% )
-  git clone git@github.com:VMLYR/$repository_name.git
-  cd "${repository_name}"
-
-}
-
-
-#: Cria sessoes tmux padrao e anexa em uma (fzf)
-function ts {
-
-    tmux new-session -d -s "python"
-    tmux new-session -d -s "bash"
-    tmux new-session -d -s "java"
-    tmux new-session -d -s "docs"
-    tmux a -t $(tmux ls | grep : | cut -d : -f1 | fzf --tmux 90%)
-
-}
 #: Consulta cheat.sh: cheat <comando>
 function cheat {
     curl cheat.sh/$1
 }
 
-
-#: Anexa em uma sessao tmux existente (fzf)
-function ta {
-
-  if [ -z $TMUX ];
-  then
-    tmux a -t $(tmux ls | grep : | cut -d : -f1 | fzf --tmux 90%)
-  else
-    echo "you must be out of a tmux session"
-  fi
-
-}
-
-
-#: Navega commits com fzf e mostra o diff no preview
-function git_diff {
-  git log --oneline --all --pretty=format:"%h" | fzf --tmux 90%  --preview "git diff --color=always {}" --preview-window='up:95%'  --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down
-}
-
 #: Lista as funcoes definidas nos .bash do diretorio atual
 function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
-}
-
-#: Inicia servidor com live reload (reload -b)
-function live_server {
-    #sudo npm i reload -g
-    reload -b
-
-}
-
-#: Converte CRLF para LF em todos os arquivos (dos2unix)
-function crl_to_lf {
-    fd . -t f | xargs dos2unix
-}
-
-#: Conta frequencia de palavras de um arquivo: count_word <arquivo>
-function count_word {
-    tr -s '[:space:]' '\n' < "$1" | sort | uniq -c | sort -nr
 }
 
 #call work_time_to_create env
