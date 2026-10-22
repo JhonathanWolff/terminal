@@ -46,6 +46,7 @@ GCP_REGIONS=(
   )
 
 
+#: Reexecuta triggers do Cloud Build nos projetos escolhidos: [branch]
 function cloudbuild_republish {
 
   REGION="us-central1"
@@ -85,6 +86,7 @@ function cloudbuild_republish {
 
 }
 
+#: Cria e executa triggers do Cloud Build nos projetos escolhidos: [branch]
 function cloudbuild_publish_new {
 
   REGION="us-central1"
@@ -125,6 +127,7 @@ function cloudbuild_publish_new {
 
 
 
+#: POST autenticado em Cloud Function com payload de ~/.payloads
 function gcp_curl_post {
 
     REGION="us-central1"
@@ -177,6 +180,7 @@ function gcp_curl_post {
 
 }
 
+#: Login ADC impersonando uma service account (fzf)
 function gcp_impersonate {
 
         for PROJECT in $(gcloud projects list --format="value(projectId)" | fzf --tmux );
@@ -187,6 +191,7 @@ function gcp_impersonate {
 }
 
 
+#: Ativa service account a partir de um JSON de chave: <arquivo.json>
 function gcp_sa_sheets_credentials {
   FILE=$1
   CURRENT_DIR=$(pwd)
@@ -195,6 +200,7 @@ function gcp_sa_sheets_credentials {
   gcloud auth activate-service-account  $( cat "${CURRENT_DIR}/${FILE}" | jq -r '.client_email' ) --key-file="${CURRENT_DIR}/${FILE}"
 }
 
+#: Adiciona role IAM a um membro (fzf); -u atualiza cache de roles
 function iam_add {
 
     if [ $# -eq 0 ];
@@ -283,6 +289,7 @@ function iam_add {
 }
 
 
+#: Gera URL de relatorio AppsFlyer via parse_report.py
 function appsflyer_url {
 
 
@@ -303,12 +310,14 @@ function appsflyer_url {
 }
 
 
+#: SSH em VM GCE running (fzf projeto/instancia)
 function gce_connect {
 
     project=$(gcloud projects list --format="value(projectId)" | fzf --tmux 90%)
     gcloud compute ssh $(gcloud compute instances list  --project=$project --filter="status:RUNNING" --format="value(name)" | fzf --tmux 90%) --project $project
 }
 
+#: Lista collection ids das cloud functions do projeto (fzf)
 function cloudfunction_collectionids {
 
 
@@ -331,6 +340,7 @@ function cloudfunction_collectionids {
 }
 
 
+#: Refaz login gcloud + ADC: gcp_auth [projeto]
 function gcp_auth {
 
   gcloud auth revoke --all
@@ -351,6 +361,7 @@ function gcp_auth {
 }
 
 
+#: Troca projeto gcloud e quota project do ADC: <projeto>
 function gcp_change_project {
   gcloud config set project $1 --quiet 2>/dev/null
   gcloud auth application-default set-quota-project $1 --quiet 2>/dev/null
@@ -359,6 +370,7 @@ function gcp_change_project {
 }
 
 
+#: Decripta com KMS (decrypt.py); -h para ajuda
 function kms_decrypt {
   work_time
   current_dir=$(pwd)
@@ -377,6 +389,7 @@ function kms_decrypt {
 }
 
 
+#: Encripta com KMS; -h para ajuda
 function kms_encrypt {
   work_time
   current_dir=$(pwd)
@@ -395,6 +408,7 @@ function kms_encrypt {
 }
 
 
+#: Envia um arquivo JSON (fzf) como documento Firestore
 function firestore_send_document {
   work_time
   current_dir=$(pwd)
@@ -423,6 +437,7 @@ function firestore_send_document {
 }
 
 
+#: Baixa documento Firestore decriptado em cred.json (gitignored)
 function credentials_get_document {
   work_time
   current_dir=$(pwd)
@@ -435,6 +450,7 @@ function credentials_get_document {
 
 
 
+#: Le documento Firestore (getDocument.py): args repassados
 function firestore_get_document {
   work_time
   current_dir=$(pwd)
@@ -457,6 +473,7 @@ function firestore_get_document {
 
 }
 
+#: Roda relatorios (fzf projetos/APIs) via Magrathea: [projeto]
 function run_report_v2 {
 
   current_dir=$(pwd)
@@ -502,6 +519,7 @@ function run_report_v2 {
 
 
 
+#: Roda relatorio via run_report.py: [projeto]
 function run_report {
   work_time
   current_dir=$(pwd)
@@ -539,6 +557,7 @@ function run_report {
 
 
 
+#: Exporta env vars de uma Cloud Function (fzf) para gcp_env.json
 function gcp_function_copy_envs {
 
   project_id=$(gcloud projects list --format="value(projectId)" | fzf --tmux );
@@ -563,6 +582,7 @@ if "LOCAL_EMULATION" in os.environ:
 
 }
 
+#: Container magrathea_package_tester montando o diretorio atual
 function magrathea_tester {
     gcloud auth configure-docker us-central1-docker.pkg.dev &>/dev/null
     docker run -v .:/app -it --rm "us-central1-docker.pkg.dev/hitchhikers-magrathea/magrathea-cicd/magrathea_package_tester:latest" /bin/bash
@@ -571,6 +591,7 @@ function magrathea_tester {
 
 
 
+#: Clona arvore do Firestore (clone_tree.py): args repassados
 function firestore_clone_tree {
   python3 $HOME/terminal/terminal_python/firestore_script/clone_tree.py "$@"
 }

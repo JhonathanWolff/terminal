@@ -1,8 +1,10 @@
 
+#: Roda container efemero de uma imagem com bash
 function docker_run_rm_terminal {
   docker run --rm -it --entrypoint bash $1
 }
 
+#: Cria/ativa a venv de trabalho (~/work/work_envs)
 function work_time {
 
     if [[ ! -d "$HOME/work/work_envs" ]];then
@@ -21,57 +23,7 @@ function work_time {
 }
 
 
-# navegacao
-function ow {
-  z $WORK
-  fzf_file=$(  fd -E "**__pycache__**" -E "**firestore_allprojects**" -E "**/dataflow/**/**target**"  -I  | fzf --tmux 90% -i --preview 'if [ -d {} ]; then tree {}; else batcat --color=always --style=plain {}; fi' --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down)
-  if [ -d $fzf_file ];
-  then
-    z "${fzf_file}"
-  else
-    fzf_folder=$(dirname "$fzf_file")
-    z "${fzf_folder}"
-  fi
-
-  z .
-
-}
-
-
-function oc {
-  fzf_file=$(  fd -E "**__pycache__**" -E "**firestore_allprojects**" -E "**/dataflow/**/**target**" -E "**.git/**"  -HI  | fzf --tmux 90% -i --preview 'if [ -d {} ]; then tree {}; else batcat --color=always --style=plain {}; fi' --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down)
-  if [ -d $fzf_file ];
-  then
-    z "${fzf_file}"
-  else
-    fzf_folder=$(dirname "$fzf_file")
-    z "${fzf_folder}"
-  fi
-
-  z .
-
-}
-
-
-function oo {
-  fzf_file=$(rg --ignore-case  --line-number --no-heading --no-ignore-vcs . | fzf --tmux 90% --delimiter ':' --preview "batcat --color=always {1} --highlight-line {2}"  --preview-window ~8,+{2}-5 --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down)
-  fzf_file=${fzf_file%%:*}
-  fzf_file=$(pwd)/$fzf_file
-
-
-  if [ -d $fzf_file ];
-  then
-    z "${fzf_file}"
-  else
-    fzf_folder=$(dirname "$fzf_file")
-    z "${fzf_folder}"
-  fi
-
-  z .
-  nvim $fzf_file
-
-}
-
+#: Escolhe um container docker (fzf) e abre bash nele
 function dcc {
 
     container_name=$(docker ps --format '{{ .Names }}' | fzf --tmux 90%)
@@ -79,6 +31,7 @@ function dcc {
 }
 
 
+#: Copia configs (zsh, bash, tmux, nvim...) para o repo e abre lazygit
 function update_terminal {
 
   current_dir=$(pwd)
@@ -106,11 +59,13 @@ function update_terminal {
 }
 
 
+#: chown de ~/work para o usuario atual
 function give_owner_to_work {
   sudo chown -R $USER ~/work
 
 }
 
+#: Escolhe repo wms/wppmedia da VMLYR (fzf) e clona
 function github_clone {
 
   repository_name=$(gh repo list VMLYR --json name -L 1000 -q '.[] | select(.name | test("wms|wppmedia-")) | .name' | fzf --tmux 90% )
@@ -120,6 +75,7 @@ function github_clone {
 }
 
 
+#: Cria sessoes tmux padrao e anexa em uma (fzf)
 function ts {
 
     tmux new-session -d -s "python"
@@ -129,11 +85,13 @@ function ts {
     tmux a -t $(tmux ls | grep : | cut -d : -f1 | fzf --tmux 90%)
 
 }
+#: Consulta cheat.sh: cheat <comando>
 function cheat {
     curl cheat.sh/$1
 }
 
 
+#: Anexa em uma sessao tmux existente (fzf)
 function ta {
 
   if [ -z $TMUX ];
@@ -146,27 +104,40 @@ function ta {
 }
 
 
+#: Navega commits com fzf e mostra o diff no preview
 function git_diff {
   git log --oneline --all --pretty=format:"%h" | fzf --tmux 90%  --preview "git diff --color=always {}" --preview-window='up:95%'  --bind ctrl-j:preview-page-up,ctrl-k:preview-page-down
 }
 
+#: Lista as funcoes definidas nos .bash do diretorio atual
 function find_methods {
   find .  | grep -E "\.bash$" | xargs -I {} rg -o   "function ([0-9A-z_]+)" {} | sed "s/function//g"
 }
 
+#: Inicia servidor com live reload (reload -b)
 function live_server {
     #sudo npm i reload -g
     reload -b
 
 }
 
+#: Converte CRLF para LF em todos os arquivos (dos2unix)
 function crl_to_lf {
     fd . -t f | xargs dos2unix
 }
 
+#: Conta frequencia de palavras de um arquivo: count_word <arquivo>
 function count_word {
     tr -s '[:space:]' '\n' < "$1" | sort | uniq -c | sort -nr
 }
 
 #call work_time_to_create env
 work_time
+
+#: Lista todas as funcoes deste diretorio com descricao (docstring "#:" acima da funcao)
+function help {
+  awk '
+    /^#: /      { desc = substr($0, 4); next }
+    /^function / { name = $2; sub(/\(.*/, "", name); if (desc != "") printf "\033[1;36m%-28s\033[0m %s\n", name, desc; desc = "" }
+  ' "$HOME/terminal/terminal_functions"/*.bash | sort
+}

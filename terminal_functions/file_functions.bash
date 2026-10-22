@@ -1,5 +1,6 @@
 
 
+#: Imprime registros de um arquivo avro como JSON: avro_open <arquivo>
 function avro_open ()
 {
     FILE_PATH="$(pwd)/$1"

@@ -1,4 +1,5 @@
 
+#: Imprime o pwd no formato de caminho Windows (\\wsl.localhost)
 function wpwd {
 
     prefix="\\wsl.localhost\Ubuntu"

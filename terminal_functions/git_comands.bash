@@ -1,14 +1,17 @@
 
 
+#: Escolhe arquivo (fzf) e mostra git blame
 function gblame {
   file_to_blame=$(fd . | fzf --tmux)
   git blame "${file_to_blame}" | fzf
 }
 
+#: Grafo de commits de todas as branches
 function glola {
   git log --graph --decorate --pretty=oneline --abbrev-commit --all
 }
 
+#: Resumo do repo: autores, arquivos mais alterados, bugs, hotfixes
 function gitinspect {
 
     echo "\n---Repo Maintainers----"

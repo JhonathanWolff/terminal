@@ -1,5 +1,6 @@
 
 
+#: Instala @types/node e js-yaml como dev deps
 function node_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -8,6 +9,7 @@ function node_install_dev()
     fi
 }
 
+#: Instala @types/node e cria tsconfig.json
 function ts_install_dev()
 {
     if [[ -f "package.json" ]]; then
@@ -32,6 +34,7 @@ function ts_install_dev()
 EOF
 }
 
+#: Escolhe um script do package.json (fzf) e roda com npm run
 function npm_package() {
 
     script=$(jq -r '.scripts | to_entries[] | .key + "##" + .value' package.json \

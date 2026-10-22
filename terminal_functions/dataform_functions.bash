@@ -1,4 +1,5 @@
 
+#: Mostra erros de compilacao do Dataform (fzf projeto/repo) no nvim
 function dt_log {
 
     REGION=$(printf "%s\n" "${GCP_REGIONS[@]}" | fzf --tmux 90% --prompt="Region for Project> ")
@@ -17,6 +18,7 @@ function dt_log {
 
 }
 
+#: Compila Dataform e salva cada query em ./compiled/<tabela>.sql
 function dt_querys {
     dataform compile --json > compiled.json
     mkdir -p compiled
@@ -34,6 +36,7 @@ function dt_querys {
 }
 
 
+#: Inicializa projeto Dataform (npmrc, deps, credenciais)
 function dt_init {
 
     rm -rf node_modules/ package-lock.json
@@ -53,6 +56,7 @@ function dt_init {
 
 
 
+#: Configura projeto Dataform (npmrc, deps, credenciais)
 function dt_config {
 
     rm -rf node_modules/ package-lock.json
@@ -85,6 +89,7 @@ function dt_config {
 
 
 
+#: Troca o valor de schema nos arquivos js/sqlx/txt: dt_rename [dir]
 function dt_rename {
 
     DIR="${1:-.}"
@@ -127,6 +132,7 @@ function dt_rename {
 
 }
 
+#: Compila Dataform e salva queries em ./compiled/<projeto.schema.tabela>.sql
 function dtc {
 
     OLD_IFS=$IFS
@@ -154,6 +160,7 @@ function dtc {
 
 }
 
+#: Faz npm link do @datasync/dataform_package
 function dt_link_lib {
 
 
